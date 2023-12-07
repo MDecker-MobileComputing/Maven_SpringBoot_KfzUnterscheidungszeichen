@@ -21,6 +21,7 @@ import org.springframework.stereotype.Component;
 
 import de.eldecker.dhbw.spring.kfzkennzeichen.model.UZKategorieEnum;
 import de.eldecker.dhbw.spring.kfzkennzeichen.model.Unterscheidungszeichen;
+import jakarta.annotation.PostConstruct;
 
 /**
  * Das Objekt dieser Bean-Klasse ist die "Datenbank", von der die Unterscheidungszeichen 
@@ -36,22 +37,27 @@ public class KfzKennzeichenDB {
     
     private static Logger LOG = LoggerFactory.getLogger(KfzKennzeichenDB.class);
     
-    /** Siehe Konfig-Property {@code unterscheidungszeichen.militaer_ausblenden} in Datei {@code src/main/resources/application.properties} . */ 
-    @Value( "${militaer_ausblenden:false}" )
-    public boolean _konfigMilitaerischeNichtZeigen;
-    
+    /** 
+     * Siehe Konfig-Property {@code unterscheidungszeichen.militaer_ausblenden} in Datei {@code src/main/resources/application.properties} .  
+     * Der Wert steht noch nicht im Konstruktor zur Verfügung!
+     */ 
+    @Value( "${unterscheidungszeichen.militaer_ausblenden:false}" )    
+    private boolean _konfigMilitaerischeNichtZeigen;
+        
     /** 
      * Map mit Daten zu Unterscheidungszeichen, bildet auf Großbuchstaben normalisierten
      * Unterscheidungszeichen auf ein Objekt der Klasse {@code Unterscheidungszeichen} ab. 
      */
     private Map<String,Unterscheidungszeichen> _datenMap = new HashMap<>(100);
         
-    
     /**
-     * Konstruktor, füllt interne HashMap mit Datenbestand auf.
+     * Datenbank füllen. Wir verwenden hierzu nicht den Konstruktor, weil im Konstruktor
+     * der mit der Annotation {@Value} injizierte Konfigurationswert noch nicht zur Verfügung
+     * steht.   
      */
-    public KfzKennzeichenDB() {
-                
+    @PostConstruct
+    public void initialisierung() {
+
         addEintrag("B"  , "Berlin"        , BE);
         addEintrag("BA" , "Bamberg"       , BY);
         addEintrag("BAD", "Baden-Baden"   , BW);
@@ -66,6 +72,12 @@ public class KfzKennzeichenDB {
         
         addEintrag("X", "Nato"       , MIL);
         addEintrag("Y", "Bundeswehr" , MIL);
+        
+        if (_konfigMilitaerischeNichtZeigen == false) {
+            
+            LOG.warn("Es wurden auch die militärischen Unterscheidungszeichen geladen.");
+            // für den gegenteiligen Fall werden von der Methode addEintrag() Log-Einträge geschrieben 
+        }
      
         LOG.info("Anzahl Unterscheidungszeichen in DB: {}", _datenMap.size());
     }
@@ -104,6 +116,8 @@ public class KfzKennzeichenDB {
      *         gefüllt.
      */
     public Optional<Unterscheidungszeichen> sucheUnterscheidungszeichen(String kuerzelNormalized) {
+        
+        LOG.info("Konfig-Wert: {}", _konfigMilitaerischeNichtZeigen);
         
         Unterscheidungszeichen ergebnis = _datenMap.get(kuerzelNormalized);
         if (ergebnis == null) {
