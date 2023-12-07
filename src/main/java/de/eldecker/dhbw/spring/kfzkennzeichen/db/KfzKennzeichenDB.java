@@ -1,14 +1,22 @@
 package de.eldecker.dhbw.spring.kfzkennzeichen.db;
 
+import static de.eldecker.dhbw.spring.kfzkennzeichen.model.UZKategorieEnum.BEH;
 import static de.eldecker.dhbw.spring.kfzkennzeichen.model.UZKategorieEnum.BE;
 import static de.eldecker.dhbw.spring.kfzkennzeichen.model.UZKategorieEnum.BW;
 import static de.eldecker.dhbw.spring.kfzkennzeichen.model.UZKategorieEnum.BY;
+import static de.eldecker.dhbw.spring.kfzkennzeichen.model.UZKategorieEnum.HE;
 import static de.eldecker.dhbw.spring.kfzkennzeichen.model.UZKategorieEnum.MIL;
+import static de.eldecker.dhbw.spring.kfzkennzeichen.model.UZKategorieEnum.NW;
+import static de.eldecker.dhbw.spring.kfzkennzeichen.model.UZKategorieEnum.SN;
 
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 import de.eldecker.dhbw.spring.kfzkennzeichen.model.UZKategorieEnum;
@@ -26,6 +34,12 @@ import de.eldecker.dhbw.spring.kfzkennzeichen.model.Unterscheidungszeichen;
 @Component
 public class KfzKennzeichenDB {
     
+    private static Logger LOG = LoggerFactory.getLogger(KfzKennzeichenDB.class);
+    
+    /** Siehe Konfig-Property {@code unterscheidungszeichen.militaer_ausblenden} in Datei {@code src/main/resources/application.properties} . */ 
+    @Value( "${militaer_ausblenden:false}" )
+    public boolean _konfigMilitaerischeNichtZeigen;
+    
     /** 
      * Map mit Daten zu Unterscheidungszeichen, bildet auf Großbuchstaben normalisierten
      * Unterscheidungszeichen auf ein Objekt der Klasse {@code Unterscheidungszeichen} ab. 
@@ -38,11 +52,22 @@ public class KfzKennzeichenDB {
      */
     public KfzKennzeichenDB() {
                 
-        addEintrag("B"  , "Berlin"     , BE);
-        addEintrag("BA" , "Bamberg"    , BY);
-        addEintrag("BAD", "Baden-Baden", BW);
+        addEintrag("B"  , "Berlin"        , BE);
+        addEintrag("BA" , "Bamberg"       , BY);
+        addEintrag("BAD", "Baden-Baden"   , BW);
+        addEintrag("K"  , "Köln"          , NW); 
+        addEintrag("M"  , "München"       , BY); 
+        addEintrag("S"  , "Stuttgart"     , BW); 
+        addEintrag("F"  , "Frankfurt/Main", HE); 
+        addEintrag("D"  , "Dresden"       , SN); 
+                
+        addEintrag("BW" , "Wasserstraßen- und Schifffahrtsverwaltung des Bundes", BEH);
+        addEintrag("THW", "Technischen Hilfswerks"                              , BEH);
         
-        addEintrag("Y", "Bundeswehr", MIL);
+        addEintrag("X", "Nato"       , MIL);
+        addEintrag("Y", "Bundeswehr" , MIL);
+     
+        LOG.info("Anzahl Unterscheidungszeichen in DB: {}", _datenMap.size());
     }
     
     /**
@@ -56,6 +81,12 @@ public class KfzKennzeichenDB {
         
         final String kuerzelNormalized = kuerzel.trim().toUpperCase();
         
+        if (_konfigMilitaerischeNichtZeigen && kategorie == MIL) {
+            
+            LOG.info("Abfrage militärisches Unterscheidungszeichen \"{}\" wegen Konfiguration nicht geladen.", kuerzelNormalized );
+            return;
+        }
+                        
         Unterscheidungszeichen uz = new Unterscheidungszeichen(kuerzelNormalized, bedeutung, kategorie); 
         _datenMap.put(kuerzelNormalized, uz);
     }

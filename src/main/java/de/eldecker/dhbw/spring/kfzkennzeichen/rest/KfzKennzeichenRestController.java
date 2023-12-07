@@ -8,6 +8,8 @@ import static org.springframework.http.HttpStatus.OK;
 
 import java.util.Optional;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -30,6 +32,8 @@ import de.eldecker.dhbw.spring.kfzkennzeichen.model.Unterscheidungszeichen;
 @RequestMapping
 public class KfzKennzeichenRestController {
     
+    private static Logger LOG = LoggerFactory.getLogger(KfzKennzeichenRestController.class);
+    
     /** "Datenbank" zur Abfrage der Unterscheidungszeichzen. */
     private KfzKennzeichenDB _kfzKennzeichenDb;
     
@@ -46,6 +50,8 @@ public class KfzKennzeichenRestController {
     }
 
     /**
+     * REST-Methode für Abfrage eines Unterscheidungszeichen von deutschen KFZ-Kennzeichen.
+     * <br><br>
      * 
      * URL für lokalen Beispielaufruf zur Abfrage von "BA" (Bamberg):
      * <a href="http://localhost:8080/unterscheidungszeichen/BA">http://localhost:8080/unterscheidungszeichen/BA</a>
@@ -61,11 +67,13 @@ public class KfzKennzeichenRestController {
         final String kuerzelNormalized = kuerzel.trim().toUpperCase();        
         if (kuerzelNormalized.isBlank()) {
             
+            LOG.warn("Abfrage für leeres Kürzel \"{}\".", kuerzel);
             ergebnisRecord = new RestErgebnisRecord(false, "Leeres Kürzel in Abfrage", UNTERSCHEIDUNGSZEICHEN_EMPTY);             
             return ResponseEntity.status(BAD_REQUEST).body(null);
         }        
-        if (kuerzelNormalized.length() > 4) {
+        if (kuerzelNormalized.length() > 3) {
 
+            LOG.warn("Abfrage für zu langes Kürzel \"{}\".", kuerzel);
             ergebnisRecord = new RestErgebnisRecord(false, "Kürzel hat mehr als drei Buchstaben", UNTERSCHEIDUNGSZEICHEN_EMPTY);             
             return ResponseEntity.status(BAD_REQUEST).body(null);
         }
@@ -74,11 +82,13 @@ public class KfzKennzeichenRestController {
         Optional<Unterscheidungszeichen> _unterscheidungszeichenOptional = _kfzKennzeichenDb.sucheUnterscheidungszeichen(kuerzelNormalized);
         if (_unterscheidungszeichenOptional.isEmpty()) {
 
+            LOG.info("Kein Ergebnis gefunden für \"{}\".", kuerzelNormalized);
             ergebnisRecord = new RestErgebnisRecord(false, "Unterscheidungszeichen '" + kuerzelNormalized + "' nicht gefunden.", UNTERSCHEIDUNGSZEICHEN_EMPTY);             
             return ResponseEntity.status(NOT_FOUND).body(ergebnisRecord);
         }
         
         ergebnisRecord = new RestErgebnisRecord(true, "", _unterscheidungszeichenOptional.get());
+        LOG.info("Erfolgreiche REST-Antwort: " + ergebnisRecord);
         return ResponseEntity.status(OK).body(ergebnisRecord);
     }
     
