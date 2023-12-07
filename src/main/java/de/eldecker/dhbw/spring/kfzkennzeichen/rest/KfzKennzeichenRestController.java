@@ -1,0 +1,86 @@
+package de.eldecker.dhbw.spring.kfzkennzeichen.rest;
+
+import static org.springframework.http.HttpStatus.NOT_FOUND;
+import static org.springframework.http.HttpStatus.BAD_REQUEST;
+import static org.springframework.http.HttpStatus.OK;
+
+import java.util.Optional;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+import de.eldecker.dhbw.spring.kfzkennzeichen.db.KfzKennzeichenDB;
+import de.eldecker.dhbw.spring.kfzkennzeichen.model.RestErgebnisRecord;
+import de.eldecker.dhbw.spring.kfzkennzeichen.model.Unterscheidungszeichen;
+
+/**
+ * RestController, der REST-API für Abfrage Unterscheidungskennzeichen von KFZ-Kennzeichen
+ * in Deutschland bereitstellt.<br><br>
+ * 
+ * Verwendung nach Annotation gem. Beispiel aus folgender Stelle von offizieller Doku:  
+ * https://docs.spring.io/spring-boot/docs/3.2.0/reference/htmlsingle/#web.servlet.spring-mvc
+ */
+@RestController
+@RequestMapping
+public class KfzKennzeichenRestController {
+    
+    /** "Datenbank" zur Abfrage der Unterscheidungszeichzen. */
+    private KfzKennzeichenDB _kfzKennzeichenDb;
+    
+    /** Leeres Unterscheidungszeichenobjekt, wird für Fehlermeldungen benötigt. */
+    private static final Unterscheidungszeichen UNTERSCHEIDUNGSZEICHEN_EMPTY = new Unterscheidungszeichen("", ""); 
+    
+    /**
+     * Konstruktor für Dependency Injection.
+     */
+    @Autowired
+    public KfzKennzeichenRestController(KfzKennzeichenDB kfzKennzeichenDB) {
+        
+        _kfzKennzeichenDb = kfzKennzeichenDB;
+    }
+
+    /**
+     * 
+     * URL für lokalen Beispielaufruf zur Abfrage von "BA" (Bamberg):
+     * <a href="http://localhost:8080/unterscheidungszeichen/BA">http://localhost:8080/unterscheidungszeichen/BA</a>
+     * 
+     * @param kuerzel Unterscheidungskennzeichen, z.B. "BA" für "Bamberg"
+     * @return
+     */
+    @GetMapping("/unterscheidungszeichen/{kuerzel}")
+    public ResponseEntity<RestErgebnisRecord> queryUnterscheidungskennzeichen(@PathVariable String kuerzel) {
+        
+        RestErgebnisRecord ergebnisRecord = null;
+        
+        final String kuerzelNormalized = kuerzel.trim().toUpperCase();
+        
+        if (kuerzelNormalized.isBlank()) {
+            
+            ergebnisRecord = new RestErgebnisRecord(false, "Leeres Kürzel in Abfrage", UNTERSCHEIDUNGSZEICHEN_EMPTY);             
+            return ResponseEntity.status(BAD_REQUEST).body(null);
+        }        
+        if (kuerzelNormalized.length() > 4) {
+
+            ergebnisRecord = new RestErgebnisRecord(false, "Kürzel hat mehr als drei Buchstaben", UNTERSCHEIDUNGSZEICHEN_EMPTY);             
+            return ResponseEntity.status(BAD_REQUEST).body(null);
+        }
+        
+        
+        Optional<Unterscheidungszeichen> _unterscheidungszeichenOptional = _kfzKennzeichenDb.sucheUnterscheidungszeichen(kuerzelNormalized);
+        if (_unterscheidungszeichenOptional.isEmpty()) {
+
+            ergebnisRecord = new RestErgebnisRecord(false, "Nichts für \"" + kuerzelNormalized + "\" gefunden", UNTERSCHEIDUNGSZEICHEN_EMPTY);             
+            return ResponseEntity.status(NOT_FOUND).body(null);
+        }
+        
+                
+        Unterscheidungszeichen ergebnis = new Unterscheidungszeichen(kuerzelNormalized, "Lorem Ipsum");
+        ergebnisRecord = new RestErgebnisRecord(true, "", _unterscheidungszeichenOptional.get());
+        return ResponseEntity.status(OK).body(ergebnisRecord);
+    }
+    
+}
