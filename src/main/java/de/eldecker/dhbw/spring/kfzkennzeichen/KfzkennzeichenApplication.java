@@ -5,6 +5,12 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 /**
  * Einstiegsklasse für Programm: Startet den Webserver.
+ * <br><br>
+ * 
+ * Aufruf spezielles Maven-Goal für Start einer Spring-Boot-Anwendung:
+ * <pre>
+ * mvn spring-boot:run
+ * </pre> 
  */
 @SpringBootApplication
 public class KfzkennzeichenApplication {

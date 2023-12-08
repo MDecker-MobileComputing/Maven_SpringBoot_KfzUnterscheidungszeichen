@@ -62,6 +62,7 @@ public class KfzKennzeichenRestController {
     @GetMapping("/unterscheidungszeichen/{kuerzel}")
     public ResponseEntity<RestErgebnisRecord> queryUnterscheidungskennzeichen(@PathVariable String kuerzel) {
         
+        LOG.debug("HTTP-Request mit kuerzel=\"{}\" empfangen.", kuerzel );        
         RestErgebnisRecord ergebnisRecord = null;
         
         final String kuerzelNormalized = kuerzel.trim().toUpperCase();        
