@@ -1,4 +1,4 @@
-package de.eldecker.dhbw.spring.kfzkennzeichen;
+package de.eldecker.dhbw.spring.kfzkennzeichen.dbdirekt;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;

@@ -1,6 +1,5 @@
-package de.eldecker.dhbw.spring.kfzkennzeichen;
+package de.eldecker.dhbw.spring.kfzkennzeichen.dbdirekt;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.util.Optional;
@@ -12,7 +11,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import de.eldecker.dhbw.spring.kfzkennzeichen.db.KfzKennzeichenDB;
-import de.eldecker.dhbw.spring.kfzkennzeichen.model.UZKategorieEnum;
 import de.eldecker.dhbw.spring.kfzkennzeichen.model.Unterscheidungszeichen;
 
 /**
