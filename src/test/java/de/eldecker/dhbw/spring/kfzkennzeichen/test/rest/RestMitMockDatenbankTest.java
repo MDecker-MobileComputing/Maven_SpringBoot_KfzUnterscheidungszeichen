@@ -1,4 +1,4 @@
-package de.eldecker.dhbw.spring.kfzkennzeichen.rest;
+package de.eldecker.dhbw.spring.kfzkennzeichen.test.rest;
 
 import static de.eldecker.dhbw.spring.kfzkennzeichen.model.UZKategorieEnum.BW;
 

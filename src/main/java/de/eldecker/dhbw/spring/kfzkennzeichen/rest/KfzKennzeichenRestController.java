@@ -18,7 +18,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import de.eldecker.dhbw.spring.kfzkennzeichen.db.KfzKennzeichenDB;
-import de.eldecker.dhbw.spring.kfzkennzeichen.model.AnzahlRecord;
+import de.eldecker.dhbw.spring.kfzkennzeichen.model.RestAnzahlRecord;
 import de.eldecker.dhbw.spring.kfzkennzeichen.model.RestErgebnisRecord;
 import de.eldecker.dhbw.spring.kfzkennzeichen.model.Unterscheidungszeichen;
 
@@ -122,11 +122,11 @@ public class KfzKennzeichenRestController {
      *         immer HTTP-Status-Code 200.
      */        
     @GetMapping("/anzahl")
-    public ResponseEntity<AnzahlRecord> queryAnzahl() {
+    public ResponseEntity<RestAnzahlRecord> queryAnzahl() {
 
         int anzahl = _kfzKennzeichenDb.getAnzahlDatensaetze();
         
-        AnzahlRecord ar = new AnzahlRecord(anzahl);
+        RestAnzahlRecord ar = new RestAnzahlRecord(anzahl);
         return ResponseEntity.status(OK).body(ar);
     }
     

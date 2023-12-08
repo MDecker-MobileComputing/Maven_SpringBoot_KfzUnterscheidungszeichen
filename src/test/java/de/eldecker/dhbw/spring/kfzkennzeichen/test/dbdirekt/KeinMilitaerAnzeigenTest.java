@@ -1,4 +1,4 @@
-package de.eldecker.dhbw.spring.kfzkennzeichen.dbdirekt;
+package de.eldecker.dhbw.spring.kfzkennzeichen.test.dbdirekt;
 
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
@@ -12,6 +12,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 
 import de.eldecker.dhbw.spring.kfzkennzeichen.db.KfzKennzeichenDB;
 import de.eldecker.dhbw.spring.kfzkennzeichen.model.Unterscheidungszeichen;
+
 
 /**
  * Die Anwendung kann über die Konfiguration {@code unterscheidungszeichen.militaer_ausblenden=true}

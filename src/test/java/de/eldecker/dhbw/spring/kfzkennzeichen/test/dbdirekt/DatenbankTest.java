@@ -1,4 +1,4 @@
-package de.eldecker.dhbw.spring.kfzkennzeichen.dbdirekt;
+package de.eldecker.dhbw.spring.kfzkennzeichen.test.dbdirekt;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
@@ -14,6 +14,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import de.eldecker.dhbw.spring.kfzkennzeichen.db.KfzKennzeichenDB;
 import de.eldecker.dhbw.spring.kfzkennzeichen.model.UZKategorieEnum;
 import de.eldecker.dhbw.spring.kfzkennzeichen.model.Unterscheidungszeichen;
+
 
 /**
  * Die Annotation {@code SpringBootTest} ist erforderlich, damit Spring Boot gestartet

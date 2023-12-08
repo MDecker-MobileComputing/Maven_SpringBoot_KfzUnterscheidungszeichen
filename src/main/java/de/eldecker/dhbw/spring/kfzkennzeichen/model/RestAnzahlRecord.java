@@ -5,4 +5,4 @@ package de.eldecker.dhbw.spring.kfzkennzeichen.model;
  * 
  * @param anzahl Gesamtanzahl Unterscheidungszeichen in Datenbank
  */
-public record AnzahlRecord(int anzahl) {}
+public record RestAnzahlRecord(int anzahl) {}
