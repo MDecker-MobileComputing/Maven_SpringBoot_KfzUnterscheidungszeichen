@@ -6,6 +6,8 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
+import java.util.Optional;
+
 import org.json.JSONObject;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -18,14 +20,16 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import de.eldecker.dhbw.spring.kfzkennzeichen.model.Unterscheidungszeichen;
+
 /**
  * Diese Unit-Test-Klasse nimmt die REST-Endpunkte, die von der Klasse 
  * {@code KfzKennzeichenRestController} bereitgestellt werden, unter Test.
- * Die Datenbank ist nicht weggemockt.
+ * Es wird die "richtige" Datenbank-Klasse und KEIN Mock verwendet.
  */
 @SpringBootTest(properties = { "unterscheidungszeichen.militaer_ausblenden=false" })
 @AutoConfigureMockMvc
-public class RestMitDatenbankTest {
+public class RestMitEchterDatenbankTest {
 
     /** 
      * Basis-URL für REST-Endpunkte der Klasse {@code KfzKennzeichenRestController},
@@ -65,9 +69,9 @@ public class RestMitDatenbankTest {
      */
     @ParameterizedTest
     @ValueSource(strings = { "BA", "ba", "Ba", "bA", " BA", "BA ", " BA ", " Ba  " })
-    void bamberg(String kuerzel) throws Exception {
+    void bamberg(String suchstring) throws Exception {
         
-        final String url = BASIS_URL + "suche/" + kuerzel;
+        final String url = BASIS_URL + "suche/" + suchstring;
         
         // REST-Endpunkt unter Test aufrufen
         MvcResult ergebnis = _mockMvc.perform(get(url))
@@ -95,10 +99,10 @@ public class RestMitDatenbankTest {
      */
     @ParameterizedTest
     @CsvSource({ "X,Nato", "Y,Bundeswehr"})
-    void militaer(String kuerzel, String beschreibung) throws Exception {
+    void militaer(String suchstring, String beschreibung) throws Exception {
 
-        final String url = BASIS_URL + "suche/" + kuerzel;
-        
+        final String url = BASIS_URL + "suche/" + suchstring;
+                 
         // REST-Endpunkt unter Test aufrufen
         MvcResult ergebnis = _mockMvc.perform(get(url))
                                 .andExpect(status().isOk())
@@ -111,7 +115,7 @@ public class RestMitDatenbankTest {
         assertTrue( hauptJsonObj.getString("fehlermeldung").isEmpty() );
 
         JSONObject uzObj = hauptJsonObj.getJSONObject("unterscheidungszeichen");
-        assertEquals(kuerzel, uzObj.getString("kuerzel"));
+        assertEquals(suchstring, uzObj.getString("kuerzel"));
         assertEquals(beschreibung, uzObj.getString("bedeutung"));
         assertEquals("Militär", uzObj.getString("kategorie"));
     }
