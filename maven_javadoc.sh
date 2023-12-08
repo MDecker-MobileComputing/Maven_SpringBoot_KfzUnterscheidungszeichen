@@ -6,4 +6,3 @@ clear
 # -Xdoclint:none: Keine Warnung, wenn für eine Methode/Argument/Klasse kein JavaDoc-Kommentar angegeben
 
 echo
-
