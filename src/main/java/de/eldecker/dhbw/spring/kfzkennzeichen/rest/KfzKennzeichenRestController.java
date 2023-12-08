@@ -43,7 +43,8 @@ public class KfzKennzeichenRestController {
     private KfzKennzeichenDB _kfzKennzeichenDb;
     
     /** Leeres Unterscheidungszeichenobjekt, wird für Fehlermeldungen benötigt. */
-    private static final Unterscheidungszeichen UNTERSCHEIDUNGSZEICHEN_EMPTY = new Unterscheidungszeichen("", "", NICHT_DEFINIERT); 
+    private static final Unterscheidungszeichen UNTERSCHEIDUNGSZEICHEN_EMPTY = new Unterscheidungszeichen( "", "", 
+                                                                                                           NICHT_DEFINIERT ); 
     
     /**
      * Konstruktor für Dependency Injection.
@@ -65,7 +66,7 @@ public class KfzKennzeichenRestController {
      * 
      * @param kuerzel Unterscheidungskennzeichen, z.B. "BA" für "Bamberg"
      * @return Objekt der Klasse {@code RestErgebnisRecord} in JSON-Form; 
-     *         mögliche HTTP-Status-Codes: 400, 404, 200
+     *         mögliche HTTP-Status-Codes: 200 (OK), 400 (Bad Request), 404 (Not Found) 
      */
     @GetMapping("/suche/{kuerzel}")
     public ResponseEntity<RestErgebnisRecord> queryUnterscheidungskennzeichen(@PathVariable String kuerzel) {
@@ -73,18 +74,13 @@ public class KfzKennzeichenRestController {
         LOG.debug("HTTP-Request mit kuerzel=\"{}\" empfangen.", kuerzel );        
         RestErgebnisRecord ergebnisRecord = null;
         
-        final String kuerzelNormalized = kuerzel.trim().toUpperCase();        
-        if (kuerzelNormalized.isBlank()) {
-             
-            LOG.warn("Abfrage für leeres Kürzel \"{}\".", kuerzel);
-            RestErgebnisRecord ergRecord = buildFehlerRecord("Leerer Abfrage-String");
-            return ResponseEntity.status(BAD_REQUEST).body(ergRecord);
-        }        
-        if (kuerzelNormalized.length() > 3) {
+        final String kuerzelNormalized = kuerzel.trim().toUpperCase();                
+        final int laenge = kuerzelNormalized.length();
+        if (laenge < 1 || laenge > 3) {
 
-            LOG.warn("Abfrage für zu langes Kürzel \"{}\".", kuerzel);
+            LOG.warn("Abfrage-String \"{}\" hat unzulässige Länge von {} Zeichen.", kuerzel, laenge);
             
-            RestErgebnisRecord ergRecord = buildFehlerRecord("Abfrage-String \"" + kuerzelNormalized + "\" hat mehr als drei Zeichen");
+            RestErgebnisRecord ergRecord = buildFehlerRecord("Abfrage-String \"" + kuerzelNormalized + "\" hat unzulässige Länge");
             return ResponseEntity.status(BAD_REQUEST).body(ergRecord);
         }
                 
