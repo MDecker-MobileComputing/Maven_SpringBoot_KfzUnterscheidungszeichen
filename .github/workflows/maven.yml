@@ -24,4 +24,4 @@ jobs:
       uses: actions/upload-artifact@v3
       with:
         name: KfzKennzeichenRestAPI_FatJar
-        path: target/*jar-with-dependencies*.jar
+        path: target/kfzkennzeichen-*.jar
