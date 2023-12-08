@@ -18,8 +18,10 @@ import de.eldecker.dhbw.spring.kfzkennzeichen.model.Unterscheidungszeichen;
 /**
  * Die Annotation {@code SpringBootTest} ist erforderlich, damit Spring Boot gestartet
  * wird, weil sonst u.a. Dependency Injection nicht zur Verfügung steht.
+ * Weiter wird über diese Annotation die Konfiguration für die Anzeige militärischer
+ * Unterscheidungszeichen kontrolliert. 
  */
-@SpringBootTest
+@SpringBootTest(properties = { "unterscheidungszeichen.militaer_ausblenden=false" })
 class DatenbankTest {
 
     /** Bean mit "Code under Test. */
@@ -34,7 +36,7 @@ class DatenbankTest {
     }
 
     @ParameterizedTest
-    @CsvSource({"B,Berlin,BE", "BA,Bamberg,BY", "BAD,Baden-Baden,BW"})
+    @CsvSource({"B,Berlin,BE", "BA,Bamberg,BY", "BAD,Baden-Baden,BW", "Y,Bundeswehr,MIL"})
     void happyPath(String kuerzel, String bedeutung, String kategorieStr) {
         
         Optional<Unterscheidungszeichen> ergebnisOptional = _cut.sucheUnterscheidungszeichen(kuerzel);
