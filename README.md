@@ -20,12 +20,34 @@ unterscheidungszeichen/v1/anzahl
 
 **Beispiel-URLs (lokaler Zugriff mit Standard-Port):**
 
-* http://localhost:8080/unterscheidungszeichen/v1/anzahl
+* http://localhost:8080/unterscheidungszeichen/v1/anzahl (siehe unten für Response)
 * http://localhost:8080/unterscheidungszeichen/v1/suche/b
 * http://localhost:8080/unterscheidungszeichen/v1/suche/ba
-* http://localhost:8080/unterscheidungszeichen/v1/suche/bad
+* http://localhost:8080/unterscheidungszeichen/v1/suche/bad (siehe unten für Response)
 * http://localhost:8080/unterscheidungszeichen/v1/suche/badx (illegal, weil zu lang)
 * http://localhost:8080/unterscheidungszeichen/v1/suche/y
+
+<br>
+
+JSON-Response für Abfrage der Anzahl:
+```
+{ "anzahl": 10 }
+```
+
+<br>
+
+JSON-Response für Abfrage "bad":
+```
+{
+    "erfolgreich": true,
+    "fehlermeldung": "",
+    "unterscheidungszeichen": {
+        "kuerzel": "BAD",
+        "bedeutung": "Baden-Baden",
+        "kategorie": "Baden-Württemberg"
+    }
+}
+```
 
 <br>
 

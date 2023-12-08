@@ -75,16 +75,17 @@ public class KfzKennzeichenRestController {
         
         final String kuerzelNormalized = kuerzel.trim().toUpperCase();        
         if (kuerzelNormalized.isBlank()) {
-            
+             
             LOG.warn("Abfrage für leeres Kürzel \"{}\".", kuerzel);
-            ergebnisRecord = new RestErgebnisRecord(false, "Leeres Kürzel in Abfrage", UNTERSCHEIDUNGSZEICHEN_EMPTY);             
-            return ResponseEntity.status(BAD_REQUEST).body(null);
+            RestErgebnisRecord ergRecord = buildFehlerRecord("Leerer Abfrage-String");
+            return ResponseEntity.status(BAD_REQUEST).body(ergRecord);
         }        
         if (kuerzelNormalized.length() > 3) {
 
             LOG.warn("Abfrage für zu langes Kürzel \"{}\".", kuerzel);
-            ergebnisRecord = new RestErgebnisRecord(false, "Kürzel hat mehr als drei Buchstaben", UNTERSCHEIDUNGSZEICHEN_EMPTY);             
-            return ResponseEntity.status(BAD_REQUEST).body(null);
+            
+            RestErgebnisRecord ergRecord = buildFehlerRecord("Abfrage-String \"" + kuerzelNormalized + "\" hat mehr als drei Zeichen");
+            return ResponseEntity.status(BAD_REQUEST).body(ergRecord);
         }
                 
         // eigentliche Abfrage
@@ -92,13 +93,24 @@ public class KfzKennzeichenRestController {
         if (_unterscheidungszeichenOptional.isEmpty()) {
  
             LOG.info("Kein Ergebnis gefunden für \"{}\".", kuerzelNormalized);
-            ergebnisRecord = new RestErgebnisRecord(false, "Unterscheidungszeichen '" + kuerzelNormalized + "' nicht gefunden.", UNTERSCHEIDUNGSZEICHEN_EMPTY);             
+            ergebnisRecord = buildFehlerRecord("Kein Unterscheidungszeichen für Abfrage-String \"" + kuerzelNormalized + "\" gefunden");   
             return ResponseEntity.status(NOT_FOUND).body(ergebnisRecord);
         }
         
         ergebnisRecord = new RestErgebnisRecord(true, "", _unterscheidungszeichenOptional.get());
         LOG.info("Erfolgreiche REST-Antwort: " + ergebnisRecord);
         return ResponseEntity.status(OK).body(ergebnisRecord);
+    }
+    
+    /**
+     * Hilfsmethode zur Erstellung Ergebnis-Record im Fehlerfall.
+     * 
+     * @param fehlertext Beschreibung was schief gegangen ist
+     * @return Ergebnis-Record für Fehlerfall mit Fehlertext aus {@code fehlertext} 
+     */
+    private RestErgebnisRecord buildFehlerRecord(String fehlertext) {
+        
+        return new RestErgebnisRecord(false, fehlertext, UNTERSCHEIDUNGSZEICHEN_EMPTY);
     }
     
     /**

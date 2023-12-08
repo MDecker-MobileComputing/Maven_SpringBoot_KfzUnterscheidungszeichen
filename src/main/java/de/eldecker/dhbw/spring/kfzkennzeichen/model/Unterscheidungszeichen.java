@@ -5,9 +5,9 @@ package de.eldecker.dhbw.spring.kfzkennzeichen.model;
  * 
  * @param kuerzel   Unterscheidungszeichen, z.B. "BA" für "Bamberg"
  * @param bedeutung Bedeutung von {@code kuerzel}, z.B. "Bamberg"
+ * @param kategorie Kategorie des Unterscheidungszeichen, z.B. Bundesland oder "Militär"
  */
 public record Unterscheidungszeichen( String kuerzel, 
                                       String bedeutung, 
-                                      UZKategorieEnum kategorie) {
-        
+                                      UZKategorieEnum kategorie) {    
 }
