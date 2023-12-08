@@ -27,6 +27,7 @@ import org.springframework.test.web.servlet.MvcResult;
 import de.eldecker.dhbw.spring.kfzkennzeichen.db.KfzKennzeichenDB;
 import de.eldecker.dhbw.spring.kfzkennzeichen.model.Unterscheidungszeichen;
 
+
 /**
  * Diese Unit-Test-Klasse nimmt die REST-Endpunkte, die von der Klasse 
  * {@code KfzKennzeichenRestController} bereitgestellt werden, unter Test.
@@ -42,6 +43,7 @@ public class RestMitMockDatenbankTest {
      */
     private static final String BASIS_URL = "/unterscheidungszeichen/v1/";
     
+    /** Bean für Absetzen simulierter REST-Requests. */
     @Autowired
     private MockMvc _mockMvc;
     
@@ -108,7 +110,8 @@ public class RestMitMockDatenbankTest {
         assertEquals("Baden-Baden", uzObj.getString("bedeutung"));
         assertEquals("Baden-Württemberg", uzObj.getString("kategorie"));
     }    
-    
+
+
     /**
      * Test für den Fall, dass die Datenbank das gesuchte Unterscheidungszeichen 
      * nicht kennt.

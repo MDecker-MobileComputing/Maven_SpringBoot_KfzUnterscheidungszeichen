@@ -6,8 +6,6 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-import java.util.Optional;
-
 import org.json.JSONObject;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -37,6 +35,7 @@ public class RestMitEchterDatenbankTest {
      */
     private static final String BASIS_URL = "/unterscheidungszeichen/v1/";
     
+    /** Bean für Absetzen simulierter REST-Requests. */
     @Autowired
     private MockMvc _mockMvc;
     
