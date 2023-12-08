@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import de.eldecker.dhbw.spring.kfzkennzeichen.db.KfzKennzeichenDB;
+import de.eldecker.dhbw.spring.kfzkennzeichen.model.AnzahlRecord;
 import de.eldecker.dhbw.spring.kfzkennzeichen.model.RestErgebnisRecord;
 import de.eldecker.dhbw.spring.kfzkennzeichen.model.Unterscheidungszeichen;
 
@@ -27,9 +28,13 @@ import de.eldecker.dhbw.spring.kfzkennzeichen.model.Unterscheidungszeichen;
  * 
  * Verwendung nach Annotation gem. Beispiel aus folgender Stelle von offizieller Doku:  
  * https://docs.spring.io/spring-boot/docs/3.2.0/reference/htmlsingle/#web.servlet.spring-mvc
+ * <br><br>
+ * 
+ * In der Teil-URL laut {@code RequestMapping} für die ganze Klasse ist "v1" für "Version 1" enthalten
+ * (REST-APIs sollten auch versioniert werden). 
  */
 @RestController
-@RequestMapping
+@RequestMapping("/unterscheidungszeichen/v1")
 public class KfzKennzeichenRestController {
     
     private static Logger LOG = LoggerFactory.getLogger(KfzKennzeichenRestController.class);
@@ -54,12 +59,15 @@ public class KfzKennzeichenRestController {
      * <br><br>
      * 
      * URL für lokalen Beispielaufruf zur Abfrage von "BA" (Bamberg):
-     * <a href="http://localhost:8080/unterscheidungszeichen/BA">http://localhost:8080/unterscheidungszeichen/BA</a>
+     * <pre>
+     *   http://localhost:8080/unterscheidungszeichen/v1/suche/b
+     * </pre>
      * 
      * @param kuerzel Unterscheidungskennzeichen, z.B. "BA" für "Bamberg"
-     * @return possible HTTP status codes: 400, 404, 200
+     * @return Objekt der Klasse {@code RestErgebnisRecord} in JSON-Form; 
+     *         mögliche HTTP-Status-Codes: 400, 404, 200
      */
-    @GetMapping("/unterscheidungszeichen/{kuerzel}")
+    @GetMapping("/suche/{kuerzel}")
     public ResponseEntity<RestErgebnisRecord> queryUnterscheidungskennzeichen(@PathVariable String kuerzel) {
         
         LOG.debug("HTTP-Request mit kuerzel=\"{}\" empfangen.", kuerzel );        
@@ -91,6 +99,27 @@ public class KfzKennzeichenRestController {
         ergebnisRecord = new RestErgebnisRecord(true, "", _unterscheidungszeichenOptional.get());
         LOG.info("Erfolgreiche REST-Antwort: " + ergebnisRecord);
         return ResponseEntity.status(OK).body(ergebnisRecord);
+    }
+    
+    /**
+     * REST-Methode für Abfrage Anzahl der Datensätze in Datenbank.
+     * <br><br>
+     * 
+     * Beispiel-URL für Aufruf:
+     * <pre>
+     *    http://localhost:8080/unterscheidungszeichen/v1/anzahl
+     * <pre>
+     * 
+     * @return Objekt der Klasse {@code AnzahlRecord} in JSON-Form; 
+     *         immer HTTP-Status-Code 200.
+     */        
+    @GetMapping("/anzahl")
+    public ResponseEntity<AnzahlRecord> queryAnzahl() {
+
+        int anzahl = _kfzKennzeichenDb.getAnzahlDatensaetze();
+        
+        AnzahlRecord ar = new AnzahlRecord(anzahl);
+        return ResponseEntity.status(OK).body(ar);
     }
     
 }

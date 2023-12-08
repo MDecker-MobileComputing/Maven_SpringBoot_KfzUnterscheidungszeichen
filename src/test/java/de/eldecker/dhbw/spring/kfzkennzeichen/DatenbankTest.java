@@ -47,5 +47,11 @@ class DatenbankTest {
         UZKategorieEnum kategorie = UZKategorieEnum.valueOf(kategorieStr);
         assertEquals(kategorie, ergebnis.kategorie());
     }
+    
+    @Test
+    void anzahl() {
+        
+        assertTrue(_cut.getAnzahlDatensaetze() > 0);
+    }
 
 }

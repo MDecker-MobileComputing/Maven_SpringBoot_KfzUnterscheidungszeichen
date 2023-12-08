@@ -26,14 +26,18 @@
 
   <h1>REST-API für Unterscheidungszeichen von deutschen KFZ-Kennzeichen</h1>
 
-  <p>Beispiel-URL für lokale Web-API-Aufrufe</p>
+  <p>Beispiel-URLs für Abfragen von Unterscheidungszeichen:</p>
   <ul>
-    <li><a href="http://localhost:8080/unterscheidungszeichen/b"   >Abfrage für "B" (Berlin)</a></li>
-    <li><a href="http://localhost:8080/unterscheidungszeichen/ba"  >Abfrage für "BA" (Bamberg)</a></li>
-    <li><a href="http://localhost:8080/unterscheidungszeichen/bad" >Abfrage für "BAD" (Baden-Baden)</a></li>
-    <li><a href="http://localhost:8080/unterscheidungszeichen/y"   >Abfrage für "Y" (Bundeswehr, nur wenn in Konfiguration eingeschaltet)</a></li>
-    <li><a href="http://localhost:8080/unterscheidungszeichen/xyz" >Abfrage für "xyz" (existiert nicht)</a></li>
+    <li><a href="http://localhost:8080/unterscheidungszeichen/v1/suche/b"   >Abfrage für "B" (Berlin)</a></li>
+    <li><a href="http://localhost:8080/unterscheidungszeichen/v1/suche/ba"  >Abfrage für "BA" (Bamberg)</a></li>
+    <li><a href="http://localhost:8080/unterscheidungszeichen/v1/suche/bad" >Abfrage für "BAD" (Baden-Baden)</a></li>
+    <li><a href="http://localhost:8080/unterscheidungszeichen/v1/suche/y"   >Abfrage für "Y" (Bundeswehr, nur wenn in Konfiguration eingeschaltet)</a></li>
+    <li><a href="http://localhost:8080/unterscheidungszeichen/v1/suche/xyz" >Abfrage für "XYZ" (existiert nicht)</a></li>
   </ul>
+
+  <p>
+    <a href="http://localhost:8080/unterscheidungszeichen/v1/anzahl">Anzahl der Datensätze in der Datenbank</a>
+  </p>
 
   <br>
 

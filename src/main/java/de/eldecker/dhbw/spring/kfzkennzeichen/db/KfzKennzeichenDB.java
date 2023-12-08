@@ -117,8 +117,6 @@ public class KfzKennzeichenDB {
      */
     public Optional<Unterscheidungszeichen> sucheUnterscheidungszeichen(String kuerzelNormalized) {
 
-        LOG.info("Konfig-Wert: {}", _konfigMilitaerischeNichtZeigen);
-
         Unterscheidungszeichen ergebnis = _datenMap.get(kuerzelNormalized);
         if (ergebnis == null) {
 
@@ -128,6 +126,16 @@ public class KfzKennzeichenDB {
 
             return Optional.of(ergebnis);
         }
+    }
+    
+    /**
+     * Getter für Anzahl der Datensätze.
+     * 
+     * @return Anzahl der gespeicherten Unterscheidungszeichen
+     */
+    public int getAnzahlDatensaetze() {
+        
+        return _datenMap.size();
     }
 
 }
