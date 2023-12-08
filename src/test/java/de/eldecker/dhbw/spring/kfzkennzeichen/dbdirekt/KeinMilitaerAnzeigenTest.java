@@ -23,7 +23,7 @@ public class KeinMilitaerAnzeigenTest {
 
     /** Bean mit "Code under Test. */
     @Autowired
-    KfzKennzeichenDB _cut;
+    private KfzKennzeichenDB _cut;
     
     @ParameterizedTest
     @CsvSource({"X,Nato,MIL", "Y,Bundeswehr,MIL"})

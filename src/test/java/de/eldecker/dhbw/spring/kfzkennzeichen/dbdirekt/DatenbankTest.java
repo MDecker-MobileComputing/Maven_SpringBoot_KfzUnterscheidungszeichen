@@ -26,7 +26,7 @@ class DatenbankTest {
 
     /** Bean mit "Code under Test. */
     @Autowired
-    KfzKennzeichenDB _cut;
+    private KfzKennzeichenDB _cut;
      
     @Test
     void sucheUnbekanntenUnterscheidungszeichen() {
