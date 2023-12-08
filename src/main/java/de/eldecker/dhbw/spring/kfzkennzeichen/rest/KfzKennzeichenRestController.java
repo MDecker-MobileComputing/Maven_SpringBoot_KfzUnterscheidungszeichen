@@ -90,7 +90,7 @@ public class KfzKennzeichenRestController {
         // eigentliche Abfrage
         Optional<Unterscheidungszeichen> _unterscheidungszeichenOptional = _kfzKennzeichenDb.sucheUnterscheidungszeichen(kuerzelNormalized);
         if (_unterscheidungszeichenOptional.isEmpty()) {
-
+ 
             LOG.info("Kein Ergebnis gefunden für \"{}\".", kuerzelNormalized);
             ergebnisRecord = new RestErgebnisRecord(false, "Unterscheidungszeichen '" + kuerzelNormalized + "' nicht gefunden.", UNTERSCHEIDUNGSZEICHEN_EMPTY);             
             return ResponseEntity.status(NOT_FOUND).body(ergebnisRecord);
