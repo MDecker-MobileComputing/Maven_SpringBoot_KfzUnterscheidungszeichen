@@ -43,9 +43,9 @@ public class KfzKennzeichenRestController {
     private KfzKennzeichenDB _kfzKennzeichenDb;
     
     /** Leeres Unterscheidungszeichenobjekt, wird für Fehlermeldungen benötigt. */
-    private static final Unterscheidungszeichen UNTERSCHEIDUNGSZEICHEN_EMPTY = new Unterscheidungszeichen( "", "", 
-                                                                                                           NICHT_DEFINIERT ); 
-    
+    private static final Unterscheidungszeichen UNTERSCHEIDUNGSZEICHEN_EMPTY = 
+                                                             new Unterscheidungszeichen( "", "", NICHT_DEFINIERT );                                                                                                           
+
     /**
      * Konstruktor für Dependency Injection.
      */

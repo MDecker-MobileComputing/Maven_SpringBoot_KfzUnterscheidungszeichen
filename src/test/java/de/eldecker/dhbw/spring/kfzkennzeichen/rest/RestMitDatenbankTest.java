@@ -16,6 +16,7 @@ import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMock
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
+import org.springframework.web.bind.annotation.RequestMapping;
 
 /**
  * Diese Unit-Test-Klasse nimmt die REST-Endpunkte, die von der Klasse 
@@ -26,11 +27,20 @@ import org.springframework.test.web.servlet.MvcResult;
 @AutoConfigureMockMvc
 public class RestMitDatenbankTest {
 
+    /** 
+     * Basis-URL für REST-Endpunkte der Klasse {@code KfzKennzeichenRestController},
+     * siehe Klassen-Annotation {@code @RequestMapping}.
+     */
     private static final String BASIS_URL = "/unterscheidungszeichen/v1/";
     
     @Autowired
     private MockMvc _mockMvc;
     
+
+    /**
+     * Test für REST-Endpunkt, der die Anzahl der Datensätze in der Datenbank
+     * zurückliefert.
+     */
     @Test
     void anzahl() throws Exception {
         
@@ -75,7 +85,8 @@ public class RestMitDatenbankTest {
         assertEquals("Bamberg", uzObj.getString("bedeutung"));
         assertEquals("Bayern", uzObj.getString("kategorie"));
     }
-    
+
+
     /**
      * Werden die militärischen Unterscheidungszeichen erkannt?
      * Für diese Unit-Test-Klasse wird per Annotation das Anzeigen von
@@ -104,13 +115,17 @@ public class RestMitDatenbankTest {
         assertEquals(beschreibung, uzObj.getString("bedeutung"));
         assertEquals("Militär", uzObj.getString("kategorie"));
     }
-    
+
+
+    /**
+     * Test für erfolglose Suche.
+     */
     @Test
     void unterscheidungszeichenNotFound() throws Exception {
         
-        final String kuerzelFalsch = "xyz";
-        
+        final String kuerzelFalsch = "xyz";        
         final String url = BASIS_URL + "suche/" + kuerzelFalsch;
+        
         // REST-Endpunkt unter Test aufrufen
         MvcResult ergebnis = _mockMvc.perform(get(url))
                                 .andExpect(status().isNotFound()) // HTTP Status Code 404
@@ -128,12 +143,10 @@ public class RestMitDatenbankTest {
         assertTrue(uzObj.getString("kategorie").isEmpty());        
     }
 
+
     /**
-     * Test für Abfrage-Strings, die "Bad Request" als HTTP-Response-Code bewirken:
-     * <ul>
-     * <li>"badx": länger als drei Zeichen</li>
-     * <li>"%20": Leerzeichen in URL-Encoding</li>
-     * </ul>
+     * Test für Abfrage-Strings, die "Bad Request" (400) als HTTP-Response-Code bewirken,
+     * weil sie eine unzulässige Länge habe.
      */
     @ParameterizedTest
     @ValueSource(strings = { "badx", "ABCxyz" })    
