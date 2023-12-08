@@ -38,7 +38,8 @@ public class KfzKennzeichenDB {
     private static Logger LOG = LoggerFactory.getLogger(KfzKennzeichenDB.class);
 
     /**
-     * Siehe Konfig-Property {@code unterscheidungszeichen.militaer_ausblenden} in Datei {@code src/main/resources/application.properties} .
+     * Siehe Konfig-Property {@code unterscheidungszeichen.militaer_ausblenden} in 
+     * Datei {@code src/main/resources/application.properties} .
      * Der Wert steht noch nicht im Konstruktor zur Verfügung!
      */
     @Value( "${unterscheidungszeichen.militaer_ausblenden:false}" )
@@ -49,6 +50,7 @@ public class KfzKennzeichenDB {
      * Unterscheidungszeichen auf ein Objekt der Klasse {@code Unterscheidungszeichen} ab.
      */
     private Map<String,Unterscheidungszeichen> _datenMap = new HashMap<>(100);
+
 
     /**
      * Datenbank füllen. Wir verwenden hierzu nicht den Konstruktor, weil im Konstruktor
@@ -81,6 +83,7 @@ public class KfzKennzeichenDB {
 
         LOG.info("Anzahl Unterscheidungszeichen in DB: {}", _datenMap.size());
     }
+
 
     /**
      * Methode, um der internen Hashmap einen Eintrag hinzuzufügen.
@@ -128,6 +131,7 @@ public class KfzKennzeichenDB {
         }
     }
     
+
     /**
      * Getter für Anzahl der Datensätze.
      * 

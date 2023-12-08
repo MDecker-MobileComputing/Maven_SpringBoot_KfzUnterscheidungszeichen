@@ -46,6 +46,7 @@ public class KfzKennzeichenRestController {
     private static final Unterscheidungszeichen UNTERSCHEIDUNGSZEICHEN_EMPTY = 
                                         new Unterscheidungszeichen( "", "", NICHT_DEFINIERT );                                                                                                           
 
+
     /**
      * Konstruktor für Dependency Injection.
      */
@@ -54,6 +55,7 @@ public class KfzKennzeichenRestController {
         
         _kfzKennzeichenDb = kfzKennzeichenDB;
     }
+
 
     /**
      * REST-Methode für Abfrage eines Unterscheidungszeichen von deutschen KFZ-Kennzeichen.
@@ -97,6 +99,7 @@ public class KfzKennzeichenRestController {
         LOG.info("Erfolgreiche REST-Antwort: " + ergebnisRecord);
         return ResponseEntity.status(OK).body(ergebnisRecord);
     }
+
     
     /**
      * Hilfsmethode zur Erstellung Ergebnis-Record im Fehlerfall.
