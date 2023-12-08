@@ -24,4 +24,5 @@ jobs:
       uses: actions/upload-artifact@v3
       with:
         name: KfzKennzeichenRestAPI_FatJar
-        path: target/kfzkennzeichen-*.jar
+        path: target/kfzkennzeichenx-*.jar
+        if-no-files-found: error # Default-Wert ist "WARN"
