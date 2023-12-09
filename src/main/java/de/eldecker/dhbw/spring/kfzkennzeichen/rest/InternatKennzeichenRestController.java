@@ -19,8 +19,8 @@ import de.eldecker.dhbw.spring.kfzkennzeichen.model.InternatKennzeichenErgebnisR
  * Kennzeichen abgefragt werden können.
  * <br><br>
  *
- * Liste mit internationalen KFZ-Kennzeichen:
- * https://www.check24.de/kfz-versicherung/kennzeichen/laenderkennzeichen/
+ * Siehe <a href="https://www.check24.de/kfz-versicherung/kennzeichen/laenderkennzeichen/">hier (check24.de)</a> 
+ * für Liste mit internationalen KFZ-Kennzeichen. 
  * <br><br>
  *
  * <b>Achtung:</b> Es wird nur dann eine Bean dieser Klasser erzeugt, wenn das Spring-Profil

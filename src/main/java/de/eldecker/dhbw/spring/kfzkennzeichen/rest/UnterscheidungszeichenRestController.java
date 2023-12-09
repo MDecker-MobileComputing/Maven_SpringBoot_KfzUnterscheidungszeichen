@@ -66,6 +66,7 @@ public class UnterscheidungszeichenRestController {
      * </pre>
      *
      * @param kuerzel Unterscheidungskennzeichen, z.B. "BA" für "Bamberg"
+     * 
      * @return Objekt der Klasse {@code RestErgebnisRecord} in JSON-Form;
      *         mögliche HTTP-Status-Codes: 200 (OK), 400 (Bad Request), 404 (Not Found)
      */
@@ -104,6 +105,7 @@ public class UnterscheidungszeichenRestController {
      * Hilfsmethode zur Erstellung Ergebnis-Record im Fehlerfall.
      *
      * @param fehlertext Beschreibung was schief gegangen ist
+     * 
      * @return Ergebnis-Record für Fehlerfall mit Fehlertext aus {@code fehlertext}
      */
     private RestErgebnisRecord buildFehlerRecord(String fehlertext) {
