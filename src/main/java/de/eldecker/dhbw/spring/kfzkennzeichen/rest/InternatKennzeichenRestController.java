@@ -1,6 +1,6 @@
 package de.eldecker.dhbw.spring.kfzkennzeichen.rest;
 
-import de.eldecker.dhbw.spring.kfzkennzeichen.model.InternatKennzeichenErgebnisRecords;
+import static org.springframework.http.HttpStatus.OK;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -10,6 +10,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+
+import de.eldecker.dhbw.spring.kfzkennzeichen.model.InternatKennzeichenErgebnisRecord;
 
 
 /**
@@ -49,11 +51,11 @@ public class InternatKennzeichenRestController {
      * </pre>
      */
     @GetMapping("/suche")
-    public ResponseEntity<InternatKennzeichenErgebnisRecords> queryInternationalesKennzeichen(@RequestParam("kennzeichen") String kennzeichen) {
+    public ResponseEntity<InternatKennzeichenErgebnisRecord> queryInternationalesKennzeichen(@RequestParam("kennzeichen") String kennzeichen) {
 
         LOG.info("Abfrage nach internationalem Kennzeichen: {}", kennzeichen);
 
-        InternatKennzeichenErgebnisRecords ergebnisRecord = new InternatKennzeichenErgebnisRecords(false, "Nicht implementiert", "");
+        InternatKennzeichenErgebnisRecord ergebnisRecord = new InternatKennzeichenErgebnisRecord(false, "Nicht implementiert", "");
         return ResponseEntity.status(OK).body(ergebnisRecord);
     }
 
