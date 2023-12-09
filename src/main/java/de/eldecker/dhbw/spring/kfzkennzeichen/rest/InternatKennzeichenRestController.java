@@ -87,6 +87,10 @@ public class InternatKennzeichenRestController {
     }
     
     /**
+     * Diese Methode gibt den Ländernamen zurück, der dem übergebenen internationalen Kennzeichen entspricht. Wenn das Kennzeichen 
+     * nicht in der Liste ist, gibt die Methode ein leeres Optional zurück.
+     * <br><br>
+     * 
      * Da die Abfrage internationaler KFZ-Kennzeichen sich noch in Entwicklung befindet, ist die "Datenbank"-Funktionalität
      * direkt im REST-Controller definiert. 
      * <br><br>
@@ -106,14 +110,40 @@ public class InternatKennzeichenRestController {
                 return Optional.of("Österreich");
             case "AND":
                 return Optional.of("Andorra");
+            case "B":
+                return Optional.of("Belgien");
             case "D":
                 return Optional.of("Deutschland");
+            case "DK":
+                return Optional.of("Dänemark");
+            case "E":
+                return Optional.of("Spanien");
             case "F":
                 return Optional.of("Frankreich");
-            case "GB":
+            case "FIN":
+                return Optional.of("Finnland");
+            case "UK":
                 return Optional.of("Großbritannien");
+            case "GR":
+                return Optional.of("Griechenland");
             case "H":
                 return Optional.of("Ungarn");
+            case "I":
+                return Optional.of("Italien");
+            case "L":
+                return Optional.of("Luxemburg");
+            case "N":
+                return Optional.of("Norwegen");
+            case "NL":
+                return Optional.of("Niederlande");
+            case "P":
+                return Optional.of("Portugal");
+            case "RUS":
+                return Optional.of("Russland");
+            case "S":
+                return Optional.of("Schweden");
+            case "TR":
+                return Optional.of("Türkei");
 
             default:
                 return Optional.empty();
