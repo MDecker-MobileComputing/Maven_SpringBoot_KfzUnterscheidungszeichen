@@ -1,4 +1,4 @@
 /**
- * Klassen für REST-Endpunkt.
+ * Klassen für REST-Endpunkte.
  */
 package de.eldecker.dhbw.spring.kfzkennzeichen.rest;

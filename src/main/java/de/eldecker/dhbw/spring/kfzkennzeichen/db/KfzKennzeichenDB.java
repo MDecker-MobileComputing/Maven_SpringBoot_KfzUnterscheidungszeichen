@@ -38,7 +38,7 @@ public class KfzKennzeichenDB {
     private static Logger LOG = LoggerFactory.getLogger(KfzKennzeichenDB.class);
 
     /**
-     * Siehe Konfig-Property {@code unterscheidungszeichen.militaer_ausblenden} in 
+     * Siehe Konfig-Property {@code unterscheidungszeichen.militaer_ausblenden} in
      * Datei {@code src/main/resources/application.properties} .
      * Der Wert steht noch nicht im Konstruktor zur Verfügung!
      */
@@ -64,6 +64,7 @@ public class KfzKennzeichenDB {
         addEintrag("BA" , "Bamberg"       , BY);
         addEintrag("BAD", "Baden-Baden"   , BW);
         addEintrag("K"  , "Köln"          , NW);
+        addEintrag("KA" , "Karlsruhe"     , BW);
         addEintrag("M"  , "München"       , BY);
         addEintrag("S"  , "Stuttgart"     , BW);
         addEintrag("F"  , "Frankfurt/Main", HE);
@@ -98,7 +99,8 @@ public class KfzKennzeichenDB {
 
         if (_konfigMilitaerischeNichtZeigen && kategorie == MIL) {
 
-            LOG.info("Abfrage militärisches Unterscheidungszeichen \"{}\" wegen Konfiguration nicht geladen.", kuerzelNormalized );
+            LOG.info("Abfrage militärisches Unterscheidungszeichen \"{}\" wegen Konfiguration nicht geladen.",
+                     kuerzelNormalized );
             return;
         }
 
@@ -130,15 +132,15 @@ public class KfzKennzeichenDB {
             return Optional.of(ergebnis);
         }
     }
-    
+
 
     /**
      * Getter für Anzahl der Datensätze.
-     * 
+     *
      * @return Anzahl der gespeicherten Unterscheidungszeichen
      */
     public int getAnzahlDatensaetze() {
-        
+
         return _datenMap.size();
     }
 
