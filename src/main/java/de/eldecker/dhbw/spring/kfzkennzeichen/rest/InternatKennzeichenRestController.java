@@ -1,6 +1,10 @@
 package de.eldecker.dhbw.spring.kfzkennzeichen.rest;
 
+import static org.springframework.http.HttpStatus.BAD_REQUEST;
+import static org.springframework.http.HttpStatus.NOT_FOUND;
 import static org.springframework.http.HttpStatus.OK;
+
+import java.util.Optional;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -11,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import de.eldecker.dhbw.spring.kfzkennzeichen.db.KfzKennzeichenDB;
 import de.eldecker.dhbw.spring.kfzkennzeichen.model.InternatKennzeichenErgebnisRecord;
 
 
@@ -45,7 +50,7 @@ public class InternatKennzeichenRestController {
      * REST-Methode für Abfrage eines internationalen KFZ-Kennzeichens.
      * <br><br>
      *
-     * Beispiel-URL für Aufruf:
+     * Beispiel-URL für Abfrage "H" (Ungarn):
      * <pre>
      *  http://localhost:8000/internatkennzeichen/v1/suche?kennzeichen=H
      * </pre>
@@ -54,9 +59,63 @@ public class InternatKennzeichenRestController {
     public ResponseEntity<InternatKennzeichenErgebnisRecord> queryInternationalesKennzeichen(@RequestParam("kennzeichen") String kennzeichen) {
 
         LOG.info("Abfrage nach internationalem Kennzeichen: {}", kennzeichen);
+        
+        InternatKennzeichenErgebnisRecord ergebnisRecord;
+        
+        final String kennzeichenNormalisiert = kennzeichen.trim().toUpperCase();
+        final int laenge = kennzeichenNormalisiert.length();
+        if (laenge < 1 ||laenge > 3) {
+            
+            ergebnisRecord = new InternatKennzeichenErgebnisRecord(false, "Unzulässige Länge des Suchstrings (" + laenge + ").", "");                                                                                                           
+            return ResponseEntity.status(BAD_REQUEST).body(ergebnisRecord);
+        }
+        
+        Optional<String> ergebnisOptional = queryDb(kennzeichenNormalisiert);
+        if (ergebnisOptional.isEmpty()) {
 
-        InternatKennzeichenErgebnisRecord ergebnisRecord = new InternatKennzeichenErgebnisRecord(false, "Nicht implementiert", "");
-        return ResponseEntity.status(OK).body(ergebnisRecord);
+            ergebnisRecord = new InternatKennzeichenErgebnisRecord(false, "Nichts gefunden für \"" + kennzeichenNormalisiert + "\".", "");
+            return ResponseEntity.status(NOT_FOUND).body(ergebnisRecord);
+            
+        } else {
+
+            final String ergebnisString = ergebnisOptional.get();
+            ergebnisRecord = new InternatKennzeichenErgebnisRecord(true, "", ergebnisString);
+            return ResponseEntity.status(OK).body(ergebnisRecord);            
+        }
+    }
+    
+    /**
+     * Da die Abfrage internationaler KFZ-Kennzeichen sich noch in Entwicklung befindet, ist die "Datenbank"-Funktionalität
+     * direkt im REST-Controller definiert. 
+     * <br><br>
+     * 
+     * TODO: in Klasse {@link KfzKennzeichenDB} verschieben
+     * 
+     * @param kennzeichenNormalized Such-String, auf Großbuchstaben normiert und Leerzeichen vorne/hinten entfernt
+     * 
+     * @return Wenn internationales Kennzeichen gefunden wurde, dann enthält das Optional einen String mit der Beschreibung,
+     *         z.B. "Ungarn" für "H". 
+     */
+    private Optional<String> queryDb(String kennzeichenNormalized) {
+        
+        switch(kennzeichenNormalized) {
+        
+            case "A":
+                return Optional.of("Österreich");
+            case "AND":
+                return Optional.of("Andorra");
+            case "D":
+                return Optional.of("Deutschland");
+            case "F":
+                return Optional.of("Frankreich");
+            case "GB":
+                return Optional.of("Großbritannien");
+            case "H":
+                return Optional.of("Ungarn");
+
+            default:
+                return Optional.empty();
+        }
     }
 
 }
