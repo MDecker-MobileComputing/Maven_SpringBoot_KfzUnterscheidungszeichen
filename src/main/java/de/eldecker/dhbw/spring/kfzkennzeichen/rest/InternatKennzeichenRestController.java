@@ -66,14 +66,16 @@ public class InternatKennzeichenRestController {
         final int laenge = kennzeichenNormalisiert.length();
         if (laenge < 1 ||laenge > 3) {
             
-            ergebnisRecord = new InternatKennzeichenErgebnisRecord(false, "Unzulässige Länge des Suchstrings (" + laenge + ").", "");                                                                                                           
+            final String fehlertext = String.format("Unzulässige Länge des Suchstrings (%d).", laenge);
+            ergebnisRecord = new InternatKennzeichenErgebnisRecord(false, fehlertext, "");                                                                                                           
             return ResponseEntity.status(BAD_REQUEST).body(ergebnisRecord);
         }
         
         Optional<String> ergebnisOptional = queryDb(kennzeichenNormalisiert);
         if (ergebnisOptional.isEmpty()) {
 
-            ergebnisRecord = new InternatKennzeichenErgebnisRecord(false, "Nichts gefunden für \"" + kennzeichenNormalisiert + "\".", "");
+            final String fehlertext = String.format("Nichts gefunden für \"%s\".", kennzeichenNormalisiert);
+            ergebnisRecord = new InternatKennzeichenErgebnisRecord(false, fehlertext, "");
             return ResponseEntity.status(NOT_FOUND).body(ergebnisRecord);
             
         } else {

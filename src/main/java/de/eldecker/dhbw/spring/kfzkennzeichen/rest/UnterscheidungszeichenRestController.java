@@ -46,6 +46,7 @@ public class UnterscheidungszeichenRestController {
     private static final Unterscheidungszeichen UNTERSCHEIDUNGSZEICHEN_EMPTY =
                                         new Unterscheidungszeichen( "", "", NICHT_DEFINIERT );
 
+
     /**
      * Konstruktor für Dependency Injection.
      */
@@ -82,8 +83,9 @@ public class UnterscheidungszeichenRestController {
 
             LOG.warn("Abfrage-String \"{}\" hat unzulässige Länge von {} Zeichen.", kuerzel, laenge);
 
-            RestErgebnisRecord ergRecord = buildFehlerRecord("Abfrage-String \"" + kuerzelNormalized + "\" hat unzulässige Länge");
-            return ResponseEntity.status(BAD_REQUEST).body(ergRecord);
+            final String fehlerText = String.format("Abfrage-String \"%s\" hat unzulässige Länge", kuerzelNormalized);
+            ergebnisRecord = buildFehlerRecord(fehlerText);
+            return ResponseEntity.status(BAD_REQUEST).body(ergebnisRecord);
         }
 
         // eigentliche Abfrage
@@ -91,7 +93,9 @@ public class UnterscheidungszeichenRestController {
         if (_unterscheidungszeichenOptional.isEmpty()) {
 
             LOG.info("Kein Ergebnis gefunden für \"{}\".", kuerzelNormalized);
-            ergebnisRecord = buildFehlerRecord("Kein Unterscheidungszeichen für Abfrage-String \"" + kuerzelNormalized + "\" gefunden");
+
+            final String fehlerText = String.format("Kein Unterscheidungszeichen für Abfrage-String \"%s\" gefunden.", kuerzelNormalized);
+            ergebnisRecord = buildFehlerRecord(fehlerText);
             return ResponseEntity.status(NOT_FOUND).body(ergebnisRecord);
         }
 
@@ -102,7 +106,7 @@ public class UnterscheidungszeichenRestController {
 
 
     /**
-     * Hilfsmethode zur Erstellung Ergebnis-Record im Fehlerfall.
+     * Hilfsmethode zur Erstellung eines Ergebnis-Record für einen Fehlerfall.
      *
      * @param fehlertext Beschreibung was schief gegangen ist
      * 
@@ -112,6 +116,7 @@ public class UnterscheidungszeichenRestController {
 
         return new RestErgebnisRecord(false, fehlertext, UNTERSCHEIDUNGSZEICHEN_EMPTY);
     }
+
 
     /**
      * REST-Methode für Abfrage Anzahl der Datensätze in Datenbank.
