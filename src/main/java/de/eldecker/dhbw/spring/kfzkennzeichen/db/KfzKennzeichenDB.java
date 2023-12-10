@@ -5,8 +5,11 @@ import static de.eldecker.dhbw.spring.kfzkennzeichen.model.UZKategorieEnum.BE;
 import static de.eldecker.dhbw.spring.kfzkennzeichen.model.UZKategorieEnum.BW;
 import static de.eldecker.dhbw.spring.kfzkennzeichen.model.UZKategorieEnum.BY;
 import static de.eldecker.dhbw.spring.kfzkennzeichen.model.UZKategorieEnum.HE;
+import static de.eldecker.dhbw.spring.kfzkennzeichen.model.UZKategorieEnum.HB;
+import static de.eldecker.dhbw.spring.kfzkennzeichen.model.UZKategorieEnum.HH;
 import static de.eldecker.dhbw.spring.kfzkennzeichen.model.UZKategorieEnum.MIL;
 import static de.eldecker.dhbw.spring.kfzkennzeichen.model.UZKategorieEnum.NW;
+import static de.eldecker.dhbw.spring.kfzkennzeichen.model.UZKategorieEnum.RP;
 import static de.eldecker.dhbw.spring.kfzkennzeichen.model.UZKategorieEnum.SN;
 
 import java.util.HashMap;
@@ -22,6 +25,7 @@ import org.springframework.stereotype.Component;
 import de.eldecker.dhbw.spring.kfzkennzeichen.model.UZKategorieEnum;
 import de.eldecker.dhbw.spring.kfzkennzeichen.model.Unterscheidungszeichen;
 import jakarta.annotation.PostConstruct;
+
 
 /**
  * Das Objekt dieser Bean-Klasse ist die "Datenbank", von der die Unterscheidungszeichen
@@ -40,7 +44,7 @@ public class KfzKennzeichenDB {
     /**
      * Siehe Konfig-Property {@code unterscheidungszeichen.militaer_ausblenden} in
      * Datei {@code src/main/resources/application.properties} .
-     * Der Wert steht noch nicht im Konstruktor zur Verfügung!
+     * Der Wert steht aber noch nicht im Konstruktor zur Verfügung!
      */
     @Value( "${unterscheidungszeichen.militaer_ausblenden:false}" )
     private boolean _konfigMilitaerischeNichtZeigen;
@@ -63,12 +67,23 @@ public class KfzKennzeichenDB {
         addEintrag("B"  , "Berlin"        , BE);
         addEintrag("BA" , "Bamberg"       , BY);
         addEintrag("BAD", "Baden-Baden"   , BW);
+        addEintrag("D"  , "Dresden"       , SN);
+        addEintrag("DD" , "Düsseldorf"    , NW);
+        addEintrag("F"  , "Frankfurt/Main", HE);
+        addEintrag("HB" , "Bremen"        , HB);
+        addEintrag("HD" , "Heidelberg"    , BW);
+        addEintrag("HH" , "Hamburg"       , HH);
         addEintrag("K"  , "Köln"          , NW);
         addEintrag("KA" , "Karlsruhe"     , BW);
+        addEintrag("L"  , "Leipzig"       , SN);
         addEintrag("M"  , "München"       , BY);
+        addEintrag("N"  , "Nürnberg"      , BY);
         addEintrag("S"  , "Stuttgart"     , BW);
-        addEintrag("F"  , "Frankfurt/Main", HE);
-        addEintrag("D"  , "Dresden"       , SN);
+        addEintrag("T"  , "Trier"         , RP);
+        addEintrag("W"  , "Wiesbaden"     , HE);
+        addEintrag("Z"  , "Zwickau"       , SN);
+
+        addEintrag("BKA", "Bundeskriminalamt"                                  , BEH);
 
         addEintrag("BW" , "Wasserstraßen- und Schifffahrtsverwaltung des Bundes", BEH);
         addEintrag("THW", "Technischen Hilfswerks"                              , BEH);
