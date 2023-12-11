@@ -9,14 +9,14 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        java-version: [17, 20]
+        java-version: [17, 21]
     steps:
     - name: Git-Repo auschecken
       uses: actions/checkout@v4
-    - name: JDK ${{ matrix.node-version }} einrichten
+    - name: JDK ${{ matrix.java-version }} einrichten
       uses: actions/setup-java@v3
       with:
-        java-version: ${{ matrix.node-version }}
+        java-version: ${{ matrix.java-version }}
         distribution: 'temurin'
         cache: maven
     - name: Maven-Installation checken
