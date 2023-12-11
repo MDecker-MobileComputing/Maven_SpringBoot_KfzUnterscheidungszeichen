@@ -6,10 +6,11 @@ on:
 
 jobs:
   job-fatjar:
-    runs-on: ubuntu-latest
+    runs-on: ${{ matrix.os-version }}
     strategy:
       matrix:
         java-version: [17, 21]
+        os-version: [ubuntu-latest, windows-latest]
     steps:
     - name: Git-Repo auschecken
       uses: actions/checkout@v4
@@ -26,6 +27,8 @@ jobs:
     - name: FatJar-Datei veröffentlichen
       uses: actions/upload-artifact@v3
       with:
-        name: KfzKennzeichenRestAPI_FatJar_java${{ matrix.java-version }}
+        name: KfzKennzeichenRestAPI_FatJar_java${{ matrix.java-version }}_${{ matrix.os-version }}
         path: target/kfzkennzeichen-*.jar
-        if-no-files-found: error # Default-Wert ist (nur) "warn"; es gibt auch noch "ignore"
+        if-no-files-found: error
+
+
