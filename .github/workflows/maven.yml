@@ -26,6 +26,6 @@ jobs:
     - name: FatJar-Datei veröffentlichen
       uses: actions/upload-artifact@v3
       with:
-        name: KfzKennzeichenRestAPI_FatJar
+        name: KfzKennzeichenRestAPI_FatJar_java${{ matrix.java-version }}
         path: target/kfzkennzeichen-*.jar
         if-no-files-found: error # Default-Wert ist (nur) "warn"; es gibt auch noch "ignore"
