@@ -83,8 +83,7 @@ public class KfzKennzeichenDB {
         addEintrag("W"  , "Wiesbaden"     , HE);
         addEintrag("Z"  , "Zwickau"       , SN);
 
-        addEintrag("BKA", "Bundeskriminalamt"                                  , BEH);
-
+        addEintrag("BKA", "Bundeskriminalamt"                                   , BEH);
         addEintrag("BW" , "Wasserstraßen- und Schifffahrtsverwaltung des Bundes", BEH);
         addEintrag("THW", "Technischen Hilfswerks"                              , BEH);
 
