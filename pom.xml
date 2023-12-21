@@ -58,9 +58,10 @@
             <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
+                <!-- Konfig für Verpacken FatJar-Datei in Docker-Image: mvn -DskipTests spring-boot:build-image -->
                 <configuration>
                     <image>
-                        <name>mide76.kfzkennzeichen</name><!-- Name Docker-Image für Befehl: mvn -DskipTests spring-boot:build-image -->
+                        <name>mide76.kfzkennzeichen</name><!-- Name Docker-Image  -->
                     </image>
                 </configuration>
             </plugin>
