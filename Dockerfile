@@ -1,4 +1,4 @@
-# Befehl um das Image zu bauen: docker build -t mide76/kfzkennzeichen:1.0 .
+# Befehl um das Image zu bauen: docker build -t mide76/kfz-kennzeichen:1.0 .
 
 # Base-Image mit OpenJDK 17 auf Alpine Linux
 FROM openjdk:17-jdk-alpine
