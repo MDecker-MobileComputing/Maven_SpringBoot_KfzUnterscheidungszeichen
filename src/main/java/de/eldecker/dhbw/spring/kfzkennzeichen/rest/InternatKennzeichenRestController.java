@@ -46,6 +46,7 @@ public class InternatKennzeichenRestController {
         LOG.info("Vorschau-Feature \"Internationale Kennzeichen\" ist aktiv.");
     }
 
+
     /**
      * REST-Methode für Abfrage eines internationalen KFZ-Kennzeichens.
      * <br><br>
@@ -85,7 +86,8 @@ public class InternatKennzeichenRestController {
             return ResponseEntity.status(OK).body(ergebnisRecord);            
         }
     }
-    
+
+
     /**
      * Diese Methode gibt den Ländernamen zurück, der dem übergebenen internationalen Kennzeichen entspricht. Wenn das Kennzeichen 
      * nicht in der Liste ist, gibt die Methode ein leeres Optional zurück.

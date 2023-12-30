@@ -38,6 +38,7 @@ public enum UZKategorieEnum {
     /** Anzeigename des aufrufenden Elements des Aufzählungstyp, kann dem Endnutzer angezeigt werden. */
     private String _anzeigeName;
     
+    
     /**
      * Konstruktor, um an Enum-Objekt den Wert für die Objektvariable mit dem Anzeigenamen zu setzen.
      * 
@@ -47,6 +48,7 @@ public enum UZKategorieEnum {
         
         _anzeigeName = anzeigeName;
     }
+
     
     /**
      * Methode liefert String-Repräsentation eines Aufzählungsobjekts zurück, nämlich den
@@ -64,4 +66,5 @@ public enum UZKategorieEnum {
         
         return _anzeigeName;
     }
+
 }
