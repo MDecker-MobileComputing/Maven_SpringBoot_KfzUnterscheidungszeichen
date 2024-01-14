@@ -30,5 +30,4 @@ jobs:
         name: KfzKennzeichenRestAPI_FatJar_java${{ matrix.java-version }}_${{ matrix.os-version }}
         path: target/kfzkennzeichen-*.jar
         if-no-files-found: error
-
-
+        retention-days: 7
