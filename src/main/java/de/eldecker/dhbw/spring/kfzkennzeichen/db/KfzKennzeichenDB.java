@@ -12,6 +12,11 @@ import static de.eldecker.dhbw.spring.kfzkennzeichen.model.UZKategorieEnum.NW;
 import static de.eldecker.dhbw.spring.kfzkennzeichen.model.UZKategorieEnum.RP;
 import static de.eldecker.dhbw.spring.kfzkennzeichen.model.UZKategorieEnum.SN;
 
+import de.eldecker.dhbw.spring.kfzkennzeichen.model.UZKategorieEnum;
+import de.eldecker.dhbw.spring.kfzkennzeichen.model.Unterscheidungszeichen;
+
+import jakarta.annotation.PostConstruct;
+
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
@@ -21,10 +26,6 @@ import org.slf4j.LoggerFactory;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
-
-import de.eldecker.dhbw.spring.kfzkennzeichen.model.UZKategorieEnum;
-import de.eldecker.dhbw.spring.kfzkennzeichen.model.Unterscheidungszeichen;
-import jakarta.annotation.PostConstruct;
 
 
 /**
