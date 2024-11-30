@@ -28,7 +28,7 @@
     </licenses>
 
     <properties>
-        <java.version>23</java.version>
+        <java.version>21</java.version>
     </properties>
 
     <dependencies>
@@ -44,7 +44,6 @@
             <scope>test</scope>
         </dependency>
 
-        <!-- zusätzliche Bibliothek für automatisch OpenAPI-Doku der REST-Endpunkte inkl. Swagger-UI -->
         <dependency>
             <groupId>org.springdoc</groupId>
             <artifactId>springdoc-openapi-starter-webmvc-ui</artifactId>
