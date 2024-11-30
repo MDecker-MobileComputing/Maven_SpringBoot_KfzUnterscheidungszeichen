@@ -3,19 +3,20 @@ name: FatJar bauen
 on:
   push:
     branches: [ "master" ]
+  workflow_dispatch:
 
 jobs:
   job-fatjar:
     runs-on: ${{ matrix.os-version }}
     strategy:
       matrix:
-        java-version: [17, 21]
+        java-version: [21, 23]
         os-version: [ubuntu-latest, windows-latest]
     steps:
     - name: Git-Repo auschecken
       uses: actions/checkout@v4
     - name: JDK ${{ matrix.java-version }} einrichten
-      uses: actions/setup-java@v3
+      uses: actions/setup-java@v4
       with:
         java-version: ${{ matrix.java-version }}
         distribution: 'temurin'
@@ -25,9 +26,9 @@ jobs:
     - name: FatJar-Datei mit Maven bauen
       run: ./mvnw --batch-mode clean package
     - name: FatJar-Datei veröffentlichen
-      uses: actions/upload-artifact@v3
+      uses: actions/upload-artifact@v4
       with:
         name: KfzKennzeichenRestAPI_FatJar_java${{ matrix.java-version }}_${{ matrix.os-version }}
         path: target/kfzkennzeichen-*.jar
         if-no-files-found: error
-        retention-days: 7
+        retention-days: 3
