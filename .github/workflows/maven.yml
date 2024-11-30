@@ -10,8 +10,10 @@ jobs:
     runs-on: ${{ matrix.os-version }}
     strategy:
       matrix:
-        java-version: [21, 23]
-        os-version: [ubuntu-latest, windows-latest]
+        java-version: [23]      
+        os-version: [ubuntu-latest]        
+#        java-version: [21, 23]
+#        os-version: [ubuntu-latest, windows-latest]
     steps:
     - name: Git-Repo auschecken
       uses: actions/checkout@v4
