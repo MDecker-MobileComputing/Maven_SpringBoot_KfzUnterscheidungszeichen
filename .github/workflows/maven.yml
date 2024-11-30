@@ -10,7 +10,7 @@ jobs:
     runs-on: ${{ matrix.os-version }}
     strategy:
       matrix:
-        java-version: [21, 23]      
+        java-version: [23, 21]      
         os-version: [ubuntu-latest]        
 #        java-version: [21, 23]
 #        os-version: [ubuntu-latest, windows-latest]
