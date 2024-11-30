@@ -59,8 +59,8 @@ public class KfzKennzeichenDB {
 
     /**
      * Datenbank füllen. Wir verwenden hierzu nicht den Konstruktor, weil im Konstruktor
-     * der mit der Annotation {@Value} injizierte Konfigurationswert noch nicht zur Verfügung
-     * steht.
+     * der mit der Annotation {@code Value} injizierte Konfigurationswert noch nicht zur 
+     * Verfügung steht.
      */
     @PostConstruct
     public void initialisierung() {

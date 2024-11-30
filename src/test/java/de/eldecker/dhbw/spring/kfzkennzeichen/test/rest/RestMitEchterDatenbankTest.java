@@ -49,8 +49,8 @@ public class RestMitEchterDatenbankTest {
 
         // REST-Endpunkt unter Test aufrufen
         MvcResult ergebnis = _mockMvc.perform(get(url))
-                                .andExpect(status().isOk())
-                                .andReturn();
+                                     .andExpect(status().isOk())
+                                     .andReturn();
 
         String jsonResult = ergebnis.getResponse().getContentAsString();
 
