@@ -43,8 +43,8 @@ public class KfzKennzeichenDB {
     private static Logger LOG = LoggerFactory.getLogger(KfzKennzeichenDB.class);
 
     /**
-     * Siehe Konfig-Property {@code unterscheidungszeichen.militaer_ausblenden} in
-     * Datei {@code src/main/resources/application.properties} .
+     * Siehe Konfig-Property {@code unterscheidungszeichen.militaer_ausblenden}
+     * in Datei {@code src/main/resources/application.properties} .
      * Der Wert steht aber noch nicht im Konstruktor zur Verfügung!
      */
     @Value( "${unterscheidungszeichen.militaer_ausblenden:false}" )
