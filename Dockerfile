@@ -2,8 +2,8 @@
 # Container mit Image starten: docker run -p 8080:8080 mide76/kfz-kennzeichen:1.0
 # Repo on Docker Hub: https://hub.docker.com/repository/docker/mide76/kfz-kennzeichen/general
 
-# Base-Image mit OpenJDK 17 auf Alpine Linux
-FROM openjdk:17-jdk-alpine
+# Base-Image mit OpenJDK
+FROM eclipse-temurin:latest
 
 # FatJar-Datei in das Image kopieren
 COPY target/kfzkennzeichen-0.0.1-SNAPSHOT.jar kfzkennzeichen.jar
