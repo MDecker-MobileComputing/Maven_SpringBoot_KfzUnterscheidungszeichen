@@ -18,7 +18,7 @@
 
     <name>KFZ-Kennzeichen</name>
     <description>Unterscheidungszeichen von deutschen KFZ-Kennzeichen (z.B. "B" für "Berlin" von REST-API abfragen)</description>
-    <url>https://github.com/MDecker-MobileComputing/Maven_Lottozahlen</url>
+    <url>https://github.com/MDecker-MobileComputing/Maven_SpringBoot_KfzUnterscheidungszeichen</url>
     <inceptionYear>2023</inceptionYear>
     <licenses>
       <license>
