@@ -32,5 +32,3 @@ jobs:
         path: target/kfzkennzeichen-*.jar
         if-no-files-found: error
         retention-days: 3
-
-
