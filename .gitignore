@@ -35,3 +35,4 @@ build/
 
 # eigene Einträge
 *.log
+*.log.*.gz

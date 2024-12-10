@@ -11,5 +11,8 @@ COPY target/kfzkennzeichen-0.0.1-SNAPSHOT.jar kfzkennzeichen.jar
 # Port 8080 freigeben (eher für Doku-Zwecke)
 EXPOSE 8080
 
+RUN mkdir /logdateien
+VOLUME /logdateien
+
 # Start der Java-Anwendung
 ENTRYPOINT ["java","-jar","/kfzkennzeichen.jar"]
