@@ -104,8 +104,10 @@ public class KfzKennzeichenDB {
     /**
      * Methode, um der internen Hashmap einen Eintrag hinzuzufügen.
      *
-     * @param kuerzel   Unterscheidungszeichen (wird auf Großbuchstaben normiert und getrimmt).
+     * @param kuerzel Unterscheidungszeichen (wird auf Großbuchstaben normiert und getrimmt).
+     * 
      * @param bedeutung Stadt-/Landkreis oder sonstige Bedeutung wie z.B. "Militär".
+     * 
      * @param kategorie Bundesland oder Organisation
      */
     private void addEintrag(String kuerzel, String bedeutung, UZKategorieEnum kategorie) {
