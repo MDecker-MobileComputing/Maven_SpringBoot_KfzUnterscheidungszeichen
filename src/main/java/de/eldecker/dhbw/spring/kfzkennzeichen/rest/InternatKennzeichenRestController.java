@@ -36,14 +36,15 @@ import de.eldecker.dhbw.spring.kfzkennzeichen.model.InternatKennzeichenErgebnisR
 @Profile("vorschau")
 public class InternatKennzeichenRestController {
 
-    private static Logger LOG = LoggerFactory.getLogger(InternatKennzeichenRestController.class);
+    private static Logger LOG = LoggerFactory.getLogger( InternatKennzeichenRestController.class );
 
+    
     /**
      * Konstruktor
      */
     public InternatKennzeichenRestController() {
 
-        LOG.info("Vorschau-Feature \"Internationale Kennzeichen\" ist aktiv.");
+        LOG.info( "Vorschau-Feature \"Internationale Kennzeichen\" ist aktiv." );
     }
 
 
@@ -57,33 +58,34 @@ public class InternatKennzeichenRestController {
      * </pre>
      */
     @GetMapping("/suche")
-    public ResponseEntity<InternatKennzeichenErgebnisRecord> queryInternationalesKennzeichen(@RequestParam("kennzeichen") String kennzeichen) {
+    public ResponseEntity<InternatKennzeichenErgebnisRecord> 
+    			queryInternationalesKennzeichen( @RequestParam("kennzeichen") String kennzeichen ) {
 
-        LOG.info("Abfrage nach internationalem Kennzeichen: {}", kennzeichen);
+        LOG.info( "Abfrage nach internationalem Kennzeichen: {}", kennzeichen );
         
         InternatKennzeichenErgebnisRecord ergebnisRecord;
         
         final String kennzeichenNormalisiert = kennzeichen.trim().toUpperCase();
         final int laenge = kennzeichenNormalisiert.length();
-        if (laenge < 1 ||laenge > 3) {
+        if ( laenge < 1 ||laenge > 3 ) {
             
-            final String fehlertext = String.format("Unzulässige Länge des Suchstrings (%d).", laenge);
-            ergebnisRecord = new InternatKennzeichenErgebnisRecord(false, fehlertext, "");                                                                                                           
-            return ResponseEntity.status(BAD_REQUEST).body(ergebnisRecord);
+            final String fehlertext = String.format( "Unzulässige Länge des Suchstrings (%d).", laenge );
+            ergebnisRecord = new InternatKennzeichenErgebnisRecord( false, fehlertext, "" );                                                                                                           
+            return ResponseEntity.status( BAD_REQUEST ).body( ergebnisRecord );
         }
         
-        Optional<String> ergebnisOptional = queryDb(kennzeichenNormalisiert);
-        if (ergebnisOptional.isEmpty()) {
+        Optional<String> ergebnisOptional = queryDb( kennzeichenNormalisiert );
+        if ( ergebnisOptional.isEmpty() ) {
 
-            final String fehlertext = String.format("Nichts gefunden für \"%s\".", kennzeichenNormalisiert);
-            ergebnisRecord = new InternatKennzeichenErgebnisRecord(false, fehlertext, "");
-            return ResponseEntity.status(NOT_FOUND).body(ergebnisRecord);
+            final String fehlertext = String.format( "Nichts gefunden für \"%s\".", kennzeichenNormalisiert );
+            ergebnisRecord = new InternatKennzeichenErgebnisRecord( false, fehlertext, "" );
+            return ResponseEntity.status( NOT_FOUND ).body( ergebnisRecord );
             
         } else {
 
             final String ergebnisString = ergebnisOptional.get();
-            ergebnisRecord = new InternatKennzeichenErgebnisRecord(true, "", ergebnisString);
-            return ResponseEntity.status(OK).body(ergebnisRecord);            
+            ergebnisRecord = new InternatKennzeichenErgebnisRecord( true, "", ergebnisString );
+            return ResponseEntity.status( OK ).body( ergebnisRecord );            
         }
     }
 
@@ -104,48 +106,48 @@ public class InternatKennzeichenRestController {
      * @return Wenn internationales Kennzeichen gefunden wurde, dann enthält das Optional einen String mit der Beschreibung,
      *         z.B. "Ungarn" für "H". 
      */
-    private Optional<String> queryDb(String kennzeichenNormalized) {
+    private Optional<String> queryDb( String kennzeichenNormalized ) {
         
-        switch(kennzeichenNormalized) {
+        switch( kennzeichenNormalized ) {
         
             case "A":
-                return Optional.of("Österreich");
+                return Optional.of( "Österreich" );
             case "AND":
-                return Optional.of("Andorra");
+                return Optional.of( "Andorra" );
             case "B":
-                return Optional.of("Belgien");
+                return Optional.of( "Belgien" );
             case "D":
-                return Optional.of("Deutschland");
+                return Optional.of( "Deutschland" );
             case "DK":
-                return Optional.of("Dänemark");
+                return Optional.of( "Dänemark" );
             case "E":
-                return Optional.of("Spanien");
+                return Optional.of( "Spanien" );
             case "F":
-                return Optional.of("Frankreich");
+                return Optional.of( "Frankreich" );
             case "FIN":
-                return Optional.of("Finnland");
+                return Optional.of( "Finnland" );
             case "UK":
-                return Optional.of("Großbritannien");
+                return Optional.of( "Großbritannien" );
             case "GR":
-                return Optional.of("Griechenland");
+                return Optional.of( "Griechenland" );
             case "H":
-                return Optional.of("Ungarn");
+                return Optional.of( "Ungarn" );
             case "I":
-                return Optional.of("Italien");
+                return Optional.of( "Italien" );
             case "L":
-                return Optional.of("Luxemburg");
+                return Optional.of( "Luxemburg" );
             case "N":
-                return Optional.of("Norwegen");
+                return Optional.of( "Norwegen" );
             case "NL":
-                return Optional.of("Niederlande");
+                return Optional.of( "Niederlande" );
             case "P":
-                return Optional.of("Portugal");
+                return Optional.of( "Portugal" );
             case "RUS":
-                return Optional.of("Russland");
+                return Optional.of( "Russland" );
             case "S":
-                return Optional.of("Schweden");
+                return Optional.of( "Schweden" );
             case "TR":
-                return Optional.of("Türkei");
+                return Optional.of( "Türkei" );
 
             default:
                 return Optional.empty();

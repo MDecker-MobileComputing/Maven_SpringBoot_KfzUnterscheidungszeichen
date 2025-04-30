@@ -1,5 +1,6 @@
 package de.eldecker.dhbw.spring.kfzkennzeichen.model;
 
+
 /**
  * Ein Objekt dieser Klasse wird von der REST-Methode als Ergebnis für die Abfrage 
  * nach einem internationalen KFZ-Kennzeichen zurückgegeben. 

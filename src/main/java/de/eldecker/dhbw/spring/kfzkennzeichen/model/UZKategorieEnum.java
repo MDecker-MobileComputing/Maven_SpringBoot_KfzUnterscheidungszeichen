@@ -2,6 +2,7 @@ package de.eldecker.dhbw.spring.kfzkennzeichen.model;
 
 import com.fasterxml.jackson.annotation.JsonValue;
 
+
 /**
  * Aufzählungstyp für Kategorie eines Unterscheidungszeichen von deutschen KFZ-Kennzeichen:
  * Entweder Bundesland, oder Organisation (Militär, Behörde).
@@ -12,27 +13,27 @@ import com.fasterxml.jackson.annotation.JsonValue;
  */
 public enum UZKategorieEnum {
  
-    NICHT_DEFINIERT(""),
+    NICHT_DEFINIERT( "" ),
     
-    BE("Berlin"),
-    BB("Brandenburg"),
-    HB("Bremen"),
-    HH("Hamburg"),
-    HE("Hessen"),
-    MV("Mecklenburg-Vorpommern"),
-    NI("Niedersachsen"),
-    NW("Nordrhein-Westfalen"),
-    RP("Rheinland-Pfalz"),
-    SL("Saarland"),
-    SN("Sachsen"),
-    ST("Sachsen-Anhalt"),
-    SH("Schleswig-Holstein"),
-    TH("Thüringen"),
-    BW("Baden-Württemberg"),
-    BY("Bayern"),
+    BE( "Berlin"                 ),
+    BB( "Brandenburg"            ),
+    HB( "Bremen"                 ),
+    HH( "Hamburg"                ),
+    HE( "Hessen"                 ),
+    MV( "Mecklenburg-Vorpommern" ),
+    NI( "Niedersachsen"          ),
+    NW( "Nordrhein-Westfalen"    ),
+    RP( "Rheinland-Pfalz"        ),
+    SL( "Saarland"               ),
+    SN( "Sachsen"                ),
+    ST( "Sachsen-Anhalt"         ),
+    SH( "Schleswig-Holstein"     ),
+    TH( "Thüringen"              ),
+    BW( "Baden-Württemberg"      ),
+    BY( "Bayern"                 ),
     
-    MIL("Militär"),
-    BEH("Behörde/Organisation");
+    MIL( "Militär"              ),
+    BEH( "Behörde/Organisation" );
     
 
     /** Anzeigename des aufrufenden Elements des Aufzählungstyp, kann dem Endnutzer angezeigt werden. */
@@ -44,7 +45,7 @@ public enum UZKategorieEnum {
      * 
      * @param anzeigeName Anzeigenamen, z.B. "Bayern" oder "Militär" 
      */
-    private UZKategorieEnum(String anzeigeName) {
+    private UZKategorieEnum( String anzeigeName ) {
         
         _anzeigeName = anzeigeName;
     }

@@ -22,6 +22,7 @@ import de.eldecker.dhbw.spring.kfzkennzeichen.model.RestAnzahlRecord;
 import de.eldecker.dhbw.spring.kfzkennzeichen.model.RestErgebnisRecord;
 import de.eldecker.dhbw.spring.kfzkennzeichen.model.Unterscheidungszeichen;
 
+
 /**
  * RestController, der REST-API für Abfrage Unterscheidungskennzeichen von KFZ-Kennzeichen
  * in Deutschland bereitstellt.<br><br>

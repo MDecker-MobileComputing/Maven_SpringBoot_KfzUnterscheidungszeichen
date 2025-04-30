@@ -40,7 +40,7 @@ import org.springframework.stereotype.Component;
 @Component
 public class KfzKennzeichenDB {
 
-    private static Logger LOG = LoggerFactory.getLogger(KfzKennzeichenDB.class);
+    private static Logger LOG = LoggerFactory.getLogger( KfzKennzeichenDB.class );
 
     /**
      * Siehe Konfig-Property {@code unterscheidungszeichen.militaer_ausblenden}
@@ -54,7 +54,7 @@ public class KfzKennzeichenDB {
      * Map mit Daten zu Unterscheidungszeichen, bildet auf Großbuchstaben normalisierten
      * Unterscheidungszeichen auf ein Objekt der Klasse {@code Unterscheidungszeichen} ab.
      */
-    private Map<String,Unterscheidungszeichen> _datenMap = new HashMap<>(100);
+    private Map<String,Unterscheidungszeichen> _datenMap = new HashMap<>( 100 );
 
 
     /**
@@ -65,39 +65,39 @@ public class KfzKennzeichenDB {
     @PostConstruct
     public void initialisierung() {
 
-        addEintrag("B"  , "Berlin"        , BE);
-        addEintrag("BA" , "Bamberg"       , BY);
-        addEintrag("BAD", "Baden-Baden"   , BW);
-        addEintrag("D"  , "Dresden"       , SN);
-        addEintrag("DD" , "Düsseldorf"    , NW);
-        addEintrag("F"  , "Frankfurt/Main", HE);
-        addEintrag("HB" , "Bremen"        , HB);
-        addEintrag("HD" , "Heidelberg"    , BW);
-        addEintrag("HH" , "Hamburg"       , HH);
-        addEintrag("K"  , "Köln"          , NW);
-        addEintrag("KA" , "Karlsruhe"     , BW);
-        addEintrag("L"  , "Leipzig"       , SN);
-        addEintrag("M"  , "München"       , BY);
-        addEintrag("N"  , "Nürnberg"      , BY);
-        addEintrag("S"  , "Stuttgart"     , BW);
-        addEintrag("T"  , "Trier"         , RP);
-        addEintrag("W"  , "Wiesbaden"     , HE);
-        addEintrag("Z"  , "Zwickau"       , SN);
+        addEintrag( "B"  , "Berlin"        , BE );
+        addEintrag( "BA" , "Bamberg"       , BY );
+        addEintrag( "BAD", "Baden-Baden"   , BW );
+        addEintrag( "D"  , "Dresden"       , SN );
+        addEintrag( "DD" , "Düsseldorf"    , NW );
+        addEintrag( "F"  , "Frankfurt/Main", HE );
+        addEintrag( "HB" , "Bremen"        , HB );
+        addEintrag( "HD" , "Heidelberg"    , BW );
+        addEintrag( "HH" , "Hamburg"       , HH );
+        addEintrag( "K"  , "Köln"          , NW );
+        addEintrag( "KA" , "Karlsruhe"     , BW );
+        addEintrag( "L"  , "Leipzig"       , SN );
+        addEintrag( "M"  , "München"       , BY );
+        addEintrag( "N"  , "Nürnberg"      , BY );
+        addEintrag( "S"  , "Stuttgart"     , BW );
+        addEintrag( "T"  , "Trier"         , RP );
+        addEintrag( "W"  , "Wiesbaden"     , HE );
+        addEintrag( "Z"  , "Zwickau"       , SN );
 
-        addEintrag("BKA", "Bundeskriminalamt"                                   , BEH);
-        addEintrag("BW" , "Wasserstraßen- und Schifffahrtsverwaltung des Bundes", BEH);
-        addEintrag("THW", "Technischen Hilfswerks"                              , BEH);
+        addEintrag( "BKA", "Bundeskriminalamt"                                   , BEH );
+        addEintrag( "BW" , "Wasserstraßen- und Schifffahrtsverwaltung des Bundes", BEH );
+        addEintrag( "THW", "Technischen Hilfswerks"                              , BEH );
 
-        addEintrag("X", "Nato"       , MIL);
-        addEintrag("Y", "Bundeswehr" , MIL);
+        addEintrag( "X", "Nato"       , MIL );
+        addEintrag( "Y", "Bundeswehr" , MIL );
 
-        if (_konfigMilitaerischeNichtZeigen == false) {
+        if ( _konfigMilitaerischeNichtZeigen == false ) {
 
-            LOG.warn("Es wurden auch die militärischen Unterscheidungszeichen geladen.");
+            LOG.warn( "Es wurden auch die militärischen Unterscheidungszeichen geladen." );
             // für den gegenteiligen Fall werden von der Methode addEintrag() Log-Einträge geschrieben
         }
 
-        LOG.info("Anzahl Unterscheidungszeichen in DB: {}", _datenMap.size());
+        LOG.info( "Anzahl Unterscheidungszeichen in DB: {}", _datenMap.size() );
     }
 
 
@@ -110,19 +110,19 @@ public class KfzKennzeichenDB {
      * 
      * @param kategorie Bundesland oder Organisation
      */
-    private void addEintrag(String kuerzel, String bedeutung, UZKategorieEnum kategorie) {
+    private void addEintrag( String kuerzel, String bedeutung, UZKategorieEnum kategorie ) {
 
         final String kuerzelNormalized = kuerzel.trim().toUpperCase();
 
-        if (_konfigMilitaerischeNichtZeigen && kategorie == MIL) {
+        if ( _konfigMilitaerischeNichtZeigen && kategorie == MIL ) {
 
-            LOG.info("Abfrage militärisches Unterscheidungszeichen \"{}\" wegen Konfiguration nicht geladen.",
-                     kuerzelNormalized );
+            LOG.info( "Abfrage militärisches Unterscheidungszeichen \"{}\" wegen Konfiguration nicht geladen.",
+                      kuerzelNormalized );
             return;
         }
 
-        Unterscheidungszeichen uz = new Unterscheidungszeichen(kuerzelNormalized, bedeutung, kategorie);
-        _datenMap.put(kuerzelNormalized, uz);
+        Unterscheidungszeichen uz = new Unterscheidungszeichen( kuerzelNormalized, bedeutung, kategorie );
+        _datenMap.put( kuerzelNormalized, uz );
     }
 
 
@@ -137,16 +137,16 @@ public class KfzKennzeichenDB {
      *         gefunden wurde; es sind dann alle Felder im enthaltenen {@code Unterscheidungszeichen}-Objekt
      *         gefüllt.
      */
-    public Optional<Unterscheidungszeichen> sucheUnterscheidungszeichen(String kuerzelNormalized) {
+    public Optional<Unterscheidungszeichen> sucheUnterscheidungszeichen( String kuerzelNormalized ) {
 
-        Unterscheidungszeichen ergebnis = _datenMap.get(kuerzelNormalized);
-        if (ergebnis == null) {
+        Unterscheidungszeichen ergebnis = _datenMap.get( kuerzelNormalized );
+        if ( ergebnis == null ) {
 
             return Optional.empty();
 
         } else {
 
-            return Optional.of(ergebnis);
+            return Optional.of( ergebnis );
         }
     }
 
