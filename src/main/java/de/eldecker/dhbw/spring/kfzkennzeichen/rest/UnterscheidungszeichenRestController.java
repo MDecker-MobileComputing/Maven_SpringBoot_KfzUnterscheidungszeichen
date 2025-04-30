@@ -21,6 +21,10 @@ import de.eldecker.dhbw.spring.kfzkennzeichen.db.KfzKennzeichenDB;
 import de.eldecker.dhbw.spring.kfzkennzeichen.model.RestAnzahlRecord;
 import de.eldecker.dhbw.spring.kfzkennzeichen.model.RestErgebnisRecord;
 import de.eldecker.dhbw.spring.kfzkennzeichen.model.Unterscheidungszeichen;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
 
 
 /**
@@ -52,7 +56,7 @@ public class UnterscheidungszeichenRestController {
      * Konstruktor für Dependency Injection.
      */
     @Autowired
-    public UnterscheidungszeichenRestController(KfzKennzeichenDB kfzKennzeichenDB) {
+    public UnterscheidungszeichenRestController( KfzKennzeichenDB kfzKennzeichenDB ) {
 
         _kfzKennzeichenDb = kfzKennzeichenDB;
     }
@@ -72,37 +76,51 @@ public class UnterscheidungszeichenRestController {
      * @return Objekt der Klasse {@code RestErgebnisRecord} in JSON-Form;
      *         mögliche HTTP-Status-Codes: 200 (OK), 400 (Bad Request), 404 (Not Found)
      */
+    @Operation(
+    	    summary = "KFZ-Unterscheidungszeichen abfragen",
+    	    description = "Endpunkt zur Abfrage der Unterscheidungszeichen von deutschen KFZ-Kennzeichen."
+    	)
+    @ApiResponses(value = {
+    	    @ApiResponse( responseCode = "200", description = "Unterscheidungszeichen erkannt" ),
+    	    @ApiResponse( responseCode = "400", description = "Unterscheidungszeichen hatte unzulässige Länge" ),
+    	    @ApiResponse( responseCode = "404", description = "Unterscheidungszeichen nicht gefunden" )
+    })    
     @GetMapping("/suche/{kuerzel}")
-    public ResponseEntity<RestErgebnisRecord> queryUnterscheidungskennzeichen(@PathVariable String kuerzel) {
+    public ResponseEntity<RestErgebnisRecord> queryUnterscheidungskennzeichen(
+    	    @Parameter(
+    	            description = "Das Unterscheidungskennzeichen, z.B. 'KA' für Karlsruhe; muss zwischen 1 und 3 Zeichen lang sein.",
+    	            required = true
+    	        )
+    		@PathVariable String kuerzel ) {    		
 
-        LOG.debug("HTTP-Request mit kuerzel=\"{}\" empfangen.", kuerzel );
+        LOG.debug( "HTTP-Request mit kuerzel=\"{}\" empfangen.", kuerzel );
         RestErgebnisRecord ergebnisRecord = null;
 
         final String kuerzelNormalized = kuerzel.trim().toUpperCase();
         final int laenge = kuerzelNormalized.length();
-        if (laenge < 1 || laenge > 3) {
+        if ( laenge < 1 || laenge > 3 ) {
 
-            LOG.warn("Abfrage-String \"{}\" hat unzulässige Länge von {} Zeichen.", kuerzel, laenge);
+            LOG.warn( "Abfrage-String \"{}\" hat unzulässige Länge von {} Zeichen.", kuerzel, laenge );
 
-            final String fehlerText = String.format("Abfrage-String \"%s\" hat unzulässige Länge", kuerzelNormalized);
-            ergebnisRecord = buildFehlerRecord(fehlerText);
-            return ResponseEntity.status(BAD_REQUEST).body(ergebnisRecord);
+            final String fehlerText = String.format( "Abfrage-String \"%s\" hat unzulässige Länge", kuerzelNormalized );
+            ergebnisRecord = buildFehlerRecord( fehlerText );
+            return ResponseEntity.status( BAD_REQUEST ).body( ergebnisRecord );
         }
 
         // eigentliche Abfrage
-        Optional<Unterscheidungszeichen> _unterscheidungszeichenOptional = _kfzKennzeichenDb.sucheUnterscheidungszeichen(kuerzelNormalized);
-        if (_unterscheidungszeichenOptional.isEmpty()) {
+        Optional<Unterscheidungszeichen> _unterscheidungszeichenOptional = _kfzKennzeichenDb.sucheUnterscheidungszeichen( kuerzelNormalized );
+        if ( _unterscheidungszeichenOptional.isEmpty() ) {
 
-            LOG.info("Kein Ergebnis gefunden für \"{}\".", kuerzelNormalized);
+            LOG.info( "Kein Ergebnis gefunden für \"{}\".", kuerzelNormalized );
 
-            final String fehlerText = String.format("Kein Unterscheidungszeichen für Abfrage-String \"%s\" gefunden.", kuerzelNormalized);
-            ergebnisRecord = buildFehlerRecord(fehlerText);
-            return ResponseEntity.status(NOT_FOUND).body(ergebnisRecord);
+            final String fehlerText = String.format( "Kein Unterscheidungszeichen für Abfrage-String \"%s\" gefunden.", kuerzelNormalized );
+            ergebnisRecord = buildFehlerRecord( fehlerText );
+            return ResponseEntity.status( NOT_FOUND ).body( ergebnisRecord );
         }
 
-        ergebnisRecord = new RestErgebnisRecord(true, "", _unterscheidungszeichenOptional.get());
-        LOG.info("Erfolgreiche REST-Antwort: " + ergebnisRecord);
-        return ResponseEntity.status(OK).body(ergebnisRecord);
+        ergebnisRecord = new RestErgebnisRecord( true, "", _unterscheidungszeichenOptional.get() );
+        LOG.info( "Erfolgreiche REST-Antwort: {}", ergebnisRecord );
+        return ResponseEntity.status( OK ).body( ergebnisRecord );
     }
 
 
@@ -113,9 +131,9 @@ public class UnterscheidungszeichenRestController {
      * 
      * @return Ergebnis-Record für Fehlerfall mit Fehlertext aus {@code fehlertext}
      */
-    private RestErgebnisRecord buildFehlerRecord(String fehlertext) {
+    private RestErgebnisRecord buildFehlerRecord( String fehlertext ) {
 
-        return new RestErgebnisRecord(false, fehlertext, UNTERSCHEIDUNGSZEICHEN_EMPTY);
+        return new RestErgebnisRecord( false, fehlertext, UNTERSCHEIDUNGSZEICHEN_EMPTY );
     }
 
 
@@ -131,13 +149,20 @@ public class UnterscheidungszeichenRestController {
      * @return Objekt der Klasse {@code AnzahlRecord} in JSON-Form;
      *         immer HTTP-Status-Code 200.
      */
+    @Operation(
+    	    summary = "Gesamtanzahl der Datensätze abfragen",
+    	    description = "Endpunkt liefert die Gesamtanzahl der Datensätze=Unterscheidungszeichen in der Datenbank zurück."
+    	)
+    @ApiResponses(value = {
+    	    @ApiResponse( responseCode = "200", description = "Gesamtanzahl der Datensätze konnte bestimmt werden" )
+    	})    
     @GetMapping("/anzahl")
     public ResponseEntity<RestAnzahlRecord> queryAnzahl() {
 
         int anzahl = _kfzKennzeichenDb.getAnzahlDatensaetze();
 
-        RestAnzahlRecord ar = new RestAnzahlRecord(anzahl);
-        return ResponseEntity.status(OK).body(ar);
+        RestAnzahlRecord ar = new RestAnzahlRecord( anzahl );
+        return ResponseEntity.status(OK).body( ar );
     }
 
 }
