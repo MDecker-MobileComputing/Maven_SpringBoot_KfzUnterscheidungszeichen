@@ -118,7 +118,9 @@ public class UnterscheidungszeichenRestController {
             return ResponseEntity.status( NOT_FOUND ).body( ergebnisRecord );
         }
 
-        ergebnisRecord = new RestErgebnisRecord( true, "", _unterscheidungszeichenOptional.get() );
+        Unterscheidungszeichen uz = _unterscheidungszeichenOptional.get();
+        
+        ergebnisRecord = new RestErgebnisRecord( true, "", uz );
         LOG.info( "Erfolgreiche REST-Antwort: {}", ergebnisRecord );
         return ResponseEntity.status( OK ).body( ergebnisRecord );
     }
