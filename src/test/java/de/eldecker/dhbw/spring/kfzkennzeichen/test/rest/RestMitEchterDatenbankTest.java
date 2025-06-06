@@ -121,6 +121,7 @@ public class RestMitEchterDatenbankTest {
     /**
      * Test für erfolglose Suche.
      */
+    
     @Test
     void unterscheidungszeichenNotFound() throws Exception {
 
@@ -129,7 +130,7 @@ public class RestMitEchterDatenbankTest {
 
         // REST-Endpunkt unter Test aufrufen
         MvcResult ergebnis = _mockMvc.perform(get(url))
-                                .andExpect(status().isNotFound()) // HTTP Status Code 404
+                                .andExpect( status().isNotFound() ) // HTTP Status Code 404
                                 .andReturn();
 
         String ergebnisStr = ergebnis.getResponse().getContentAsString();
