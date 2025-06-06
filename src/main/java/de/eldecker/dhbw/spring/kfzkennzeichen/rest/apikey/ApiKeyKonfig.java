@@ -7,6 +7,10 @@ import org.springframework.context.annotation.Profile;
 import org.springframework.web.filter.OncePerRequestFilter;
 
 
+/**
+ * Diese Klasse aktiviert den Filter für den API-Key-Check, wenn das Profil
+ * "apiKey" aktiv ist.
+ */
 @Configuration
 @Profile("apikey")
 public class ApiKeyKonfig {
@@ -17,15 +21,22 @@ public class ApiKeyKonfig {
 	private ApiKeyFilter _apiKeyFilter = new ApiKeyFilter();
 	
 	
+	/**
+	 * Registriert eine Instanz der Klasse {@link ApiKeyFilter} für
+	 * alle REST-Endpunkte.
+	 * 
+	 * @return {@code FilterRegistrationBean} mit {@link ApiKeyFilter}
+	 */
     @Bean
-    public FilterRegistrationBean<OncePerRequestFilter> apiKeyFilter() {
+    public FilterRegistrationBean<OncePerRequestFilter> registriereApiKeyFilter() {
     	    	
-    	FilterRegistrationBean<OncePerRequestFilter> registrationBean = new FilterRegistrationBean<>();
-    	    	
-    	registrationBean.setFilter( _apiKeyFilter );
-    	registrationBean.addUrlPatterns( "/unterscheidungszeichen/*" );
+    	final FilterRegistrationBean<OncePerRequestFilter> frb = 
+    												new FilterRegistrationBean<>(); 
+    												    	    	
+    	frb .setFilter( _apiKeyFilter );
+    	frb .addUrlPatterns( "/unterscheidungszeichen/*" );
     	
-    	return registrationBean;
+    	return frb ;
     }
 	
 }
