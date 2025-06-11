@@ -68,6 +68,7 @@ public class KfzKennzeichenDB {
         addEintrag( "B"  , "Berlin"        , BE );
         addEintrag( "BA" , "Bamberg"       , BY );
         addEintrag( "BAD", "Baden-Baden"   , BW );
+        addEintrag( "BR" , "Bruchsal"      , BW ); // im Jahr 2025 wiedereingeführt 
         addEintrag( "D"  , "Dresden"       , SN );
         addEintrag( "DD" , "Düsseldorf"    , NW );
         addEintrag( "F"  , "Frankfurt/Main", HE );
