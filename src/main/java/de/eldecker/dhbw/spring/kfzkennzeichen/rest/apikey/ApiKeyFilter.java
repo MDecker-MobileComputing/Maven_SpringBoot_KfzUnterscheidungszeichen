@@ -20,6 +20,7 @@ public class ApiKeyFilter extends OncePerRequestFilter {
 
 	private static Logger LOG = LoggerFactory.getLogger( ApiKeyFilter.class );
 
+	
 	/** "Datenbank" der aktiven API-Keys. */
 	private final List<String> _apiKeyList = List.of( "abc123", "xyz123", "abc456" );
 
@@ -32,8 +33,8 @@ public class ApiKeyFilter extends OncePerRequestFilter {
 	 *
 	 * @param response HTTP-Antwort
 	 *
-	 * @param filterChain Filterkette (wird aufgerufen für weitere Verarbeitung des
-	 *                    Requests)
+	 * @param filterChain Filterkette (wird aufgerufen für weitere Verarbeitung 
+	 *                    des Requests)
 	 */
 	@Override
 	public void doFilterInternal( HttpServletRequest  request,
@@ -43,10 +44,11 @@ public class ApiKeyFilter extends OncePerRequestFilter {
 			throws ServletException, IOException {
 
 		final String apiKey = request.getParameter( "apikey" );
+		//final String apiKey = request.getHeader( "X-API-Key" );
 		
 		if ( apiKey == null ) {
 
-			LOG.warn( "Request ganz ohne API-Key fuer Pfad {}", 
+			LOG.warn( "Request ganz ohne API-Key fuer Pfad {} .", 
 					  request.getRequestURI() );
 
             response.setStatus( 401 ); // Unauthorized
@@ -54,11 +56,11 @@ public class ApiKeyFilter extends OncePerRequestFilter {
 
 		} else if ( _apiKeyList.contains( apiKey ) == false ) {
 
-			LOG.warn( "Ungueltiger API-Key \"{}\" in Request fuer Pfad {}", 
+			LOG.warn( "Ungueltiger API-Key \"{}\" in Request fuer Pfad {} .", 
 					  apiKey, request.getRequestURI() );
 
             response.setStatus( 401 ); // Unauthorized
-            response.getWriter().write( "API-Key nicht gueltig" );
+            response.getWriter().write( "API-Key nicht gueltig." );
 			
 		} else {
 
