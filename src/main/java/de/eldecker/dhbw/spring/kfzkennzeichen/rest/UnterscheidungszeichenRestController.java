@@ -51,7 +51,6 @@ public class UnterscheidungszeichenRestController {
     private static final Unterscheidungszeichen UNTERSCHEIDUNGSZEICHEN_EMPTY =
                                         new Unterscheidungszeichen( "", "", NICHT_DEFINIERT );
 
-
     /**
      * Konstruktor für Dependency Injection.
      */
