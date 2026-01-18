@@ -1,0 +1,135 @@
+{
+  "version": 6,
+  "entities": [
+    {
+      "entity": {
+        "type": "Project",
+        "id": "7567a864-51b6-4e65-8c2e-cff7dde37a9f",
+        "name": "KFZ-Unterscheidungszeichen"
+      },
+      "children": [
+        {
+          "entity": {
+            "type": "Request",
+            "method": {
+              "link": "http://tools.ietf.org/html/rfc7231#section-4.3.1",
+              "name": "GET"
+            },
+            "body": {
+              "formBody": {
+                "overrideContentType": true,
+                "encoding": "application/x-www-form-urlencoded",
+                "items": []
+              },
+              "bodyType": "Text"
+            },
+            "uri": {
+              "query": {
+                "delimiter": "&",
+                "items": []
+              },
+              "scheme": {
+                "name": "http",
+                "version": "V11"
+              },
+              "host": "localhost:8080",
+              "path": "/unterscheidungszeichen/v1/suche/KA"
+            },
+            "id": "9d5805c5-b2cb-4830-8be1-95a46763c726",
+            "name": "Abfrage \"KA\" mit API-Key",
+            "headers": [
+              {
+                "enabled": true,
+                "name": "X-API-KEY",
+                "value": "abc123x"
+              },
+              {
+                "name": "",
+                "value": ""
+              }
+            ]
+          }
+        },
+        {
+          "entity": {
+            "type": "Request",
+            "method": {
+              "link": "http://tools.ietf.org/html/rfc7231#section-4.3.1",
+              "name": "GET"
+            },
+            "body": {
+              "formBody": {
+                "overrideContentType": true,
+                "encoding": "application/x-www-form-urlencoded",
+                "items": []
+              },
+              "bodyType": "Text"
+            },
+            "uri": {
+              "query": {
+                "delimiter": "&",
+                "items": []
+              },
+              "scheme": {
+                "name": "http",
+                "version": "V11"
+              },
+              "host": "localhost:8080",
+              "path": "/unterscheidungszeichen/v1/suche/KAX"
+            },
+            "id": "d3769231-752a-4856-b05d-4101a4da46e0",
+            "name": "Abfrage \"KA\" ohne API-Key",
+            "headers": [
+              {
+                "name": "",
+                "value": ""
+              }
+            ]
+          }
+        },
+        {
+          "entity": {
+            "type": "Request",
+            "method": {
+              "link": "http://tools.ietf.org/html/rfc7231#section-4.3.1",
+              "name": "GET"
+            },
+            "body": {
+              "formBody": {
+                "overrideContentType": true,
+                "encoding": "application/x-www-form-urlencoded",
+                "items": []
+              },
+              "bodyType": "Text"
+            },
+            "uri": {
+              "query": {
+                "delimiter": "&",
+                "items": []
+              },
+              "scheme": {
+                "name": "http",
+                "version": "V11"
+              },
+              "host": "localhost:8080",
+              "path": "/unterscheidungszeichen/v1/suche/KAX"
+            },
+            "id": "23d36d5f-832c-4f91-af90-fc97c7290b64",
+            "name": "Abfrage \"KAX\" mit API-Key",
+            "headers": [
+              {
+                "enabled": true,
+                "name": "X-API-KEY",
+                "value": "abc123x"
+              },
+              {
+                "name": "",
+                "value": ""
+              }
+            ]
+          }
+        }
+      ]
+    }
+  ]
+}
