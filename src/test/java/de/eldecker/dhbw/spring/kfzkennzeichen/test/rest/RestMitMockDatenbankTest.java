@@ -18,9 +18,9 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
 import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.boot.webmvc.test.autoconfigure.AutoConfigureMockMvc;
+import org.springframework.test.context.bean.override.mockito.MockitoBean;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
 
@@ -51,7 +51,7 @@ public class RestMitMockDatenbankTest {
      * Mock-Objekt für Datenbank, wird wegen Dependency Injection von Bean der Klasse
      * {@code UnterscheidungszeichenRestController} verwendet werden.
      */
-    @MockBean
+    @MockitoBean
     private KfzKennzeichenDB _dbMock;
 
     /**
