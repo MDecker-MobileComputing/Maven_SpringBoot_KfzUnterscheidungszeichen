@@ -27,7 +27,7 @@ public class ApiKeyFilter extends OncePerRequestFilter {
 
 	/**
 	 * Diese Methode bricht einen HTTP-Request ab, wenn kein gültiger API-Key
-	 * in {@code request} als URL-Parameter enthalten ist.
+	 * in {@code request} als URL-Parameter oder Header enthalten ist.
 	 *
 	 * @param request HTTP-Anfrage, von der der API-Key gelesen wird
 	 *
@@ -43,9 +43,13 @@ public class ApiKeyFilter extends OncePerRequestFilter {
 			                    )
 			throws ServletException, IOException {
 
-		//final String apiKey = request.getParameter( "apikey" );
-		final String apiKey = request.getHeader( "X-API-Key" );
+		String apiKey = request.getParameter( "apikey" );
 		
+		if ( apiKey == null ) {
+			
+			apiKey = request.getHeader( "X-API-Key" );
+		}
+				
 		if ( apiKey == null ) {
 
 			LOG.warn( "Request ganz ohne API-Key fuer Pfad {} .", 

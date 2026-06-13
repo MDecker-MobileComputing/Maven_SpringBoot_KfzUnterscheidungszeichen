@@ -4,7 +4,7 @@
     {
       "entity": {
         "type": "Project",
-        "id": "7567a864-51b6-4e65-8c2e-cff7dde37a9f",
+        "id": "203ad272-761a-486d-86b7-6679075f653f",
         "name": "KFZ-Unterscheidungszeichen"
       },
       "children": [
@@ -35,8 +35,56 @@
               "host": "localhost:8080",
               "path": "/unterscheidungszeichen/v1/suche/KA"
             },
-            "id": "9d5805c5-b2cb-4830-8be1-95a46763c726",
-            "name": "Abfrage \"KA\" mit API-Key",
+            "id": "84474959-97ce-49f8-8037-0078a670883a",
+            "name": "Abfrage \"KA\" mit API-Key Header",
+            "headers": [
+              {
+                "enabled": true,
+                "name": "X-API-KEY",
+                "value": "abc123"
+              },
+              {
+                "name": "",
+                "value": ""
+              }
+            ]
+          }
+        },
+        {
+          "entity": {
+            "type": "Request",
+            "method": {
+              "link": "http://tools.ietf.org/html/rfc7231#section-4.3.1",
+              "name": "GET"
+            },
+            "body": {
+              "formBody": {
+                "overrideContentType": true,
+                "encoding": "application/x-www-form-urlencoded",
+                "items": []
+              },
+              "bodyType": "Text"
+            },
+            "uri": {
+              "query": {
+                "delimiter": "&",
+                "items": [
+                  {
+                    "enabled": true,
+                    "name": "apikey",
+                    "value": "abc123"
+                  }
+                ]
+              },
+              "scheme": {
+                "name": "http",
+                "version": "V11"
+              },
+              "host": "localhost:8080",
+              "path": "/unterscheidungszeichen/v1/suche/KA"
+            },
+            "id": "cad4c977-7ed3-4f6c-8804-304c18bdf966",
+            "name": "Abfrage \"KA\" mit API-Key URL-Parameter",
             "headers": [
               {
                 "enabled": true,
@@ -77,7 +125,7 @@
               "host": "localhost:8080",
               "path": "/unterscheidungszeichen/v1/suche/KAX"
             },
-            "id": "d3769231-752a-4856-b05d-4101a4da46e0",
+            "id": "a93a553f-aacb-4fa6-ac2a-9bdf93f074e7",
             "name": "Abfrage \"KA\" ohne API-Key",
             "headers": [
               {
@@ -114,8 +162,8 @@
               "host": "localhost:8080",
               "path": "/unterscheidungszeichen/v1/suche/KAX"
             },
-            "id": "23d36d5f-832c-4f91-af90-fc97c7290b64",
-            "name": "Abfrage \"KAX\" mit API-Key",
+            "id": "6c08d2ad-4ede-42aa-9879-af311efb77e4",
+            "name": "Abfrage \"KAX\" API-Key Header",
             "headers": [
               {
                 "enabled": true,
