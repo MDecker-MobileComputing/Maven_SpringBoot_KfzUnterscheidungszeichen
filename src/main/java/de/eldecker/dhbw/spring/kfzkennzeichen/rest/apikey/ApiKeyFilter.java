@@ -58,7 +58,7 @@ public class ApiKeyFilter extends OncePerRequestFilter {
             response.setStatus( 401 ); // Unauthorized
             response.getWriter().write( "Kein API-Key" );
 
-		} else if ( _apiKeyList.contains( apiKey ) == false ) {
+		} else if ( _apiKeyList.contains( apiKey ) == false ) { //API-Key vorhanden, aber ungültig?
 
 			LOG.warn( "Ungueltiger API-Key \"{}\" in Request fuer Pfad {} .", 
 					  apiKey, request.getRequestURI() );
@@ -66,7 +66,7 @@ public class ApiKeyFilter extends OncePerRequestFilter {
             response.setStatus( 401 ); // Unauthorized
             response.getWriter().write( "API-Key nicht gueltig." );
 			
-		} else {
+		} else { // API-Key vorhanden und gültig
 
 			filterChain.doFilter( request, response );
 		}
