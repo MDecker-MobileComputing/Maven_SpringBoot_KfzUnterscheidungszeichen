@@ -43,7 +43,7 @@ public class ApiKeyFilter extends OncePerRequestFilter {
 			                    )
 			throws ServletException, IOException {
 
-		String apiKey = request.getParameter( "apikey" );
+		String apiKey = request.getParameter( "apikey" ); // API-Key aus URL-Parameter lesen
 		
 		if ( apiKey == null ) {
 			
